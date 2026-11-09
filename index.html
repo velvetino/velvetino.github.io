@@ -9,7 +9,7 @@
 <meta property="og:description" content="Almohadones a medida hechos a mano en Córdoba. Envíos a todo el país.">
 <meta property="og:url" content="https://velvetino.github.io/">
 <link rel="canonical" href="https://velvetino.github.io/">
-<meta property="og:image" content="https://velvetino.github.io/fotos/almohadon-%20sillon%20de%20piso/foto%20(5).jpg">
+<meta property="og:image" content="https://velvetino.github.io/img/portada.jpg">
 <meta name="theme-color" content="#fdf6e3">
 <link rel="icon" href="img/icon.svg?v=2" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,8 +131,9 @@
 
   /* ---------- hero: foto a sangre con título encima ---------- */
   .hero { position: relative; min-height: min(82vh, 760px); display: flex; align-items: flex-end; color: #fdf6e3; overflow: hidden; background: #2b1a10; }
-  .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
-  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,16,8,0) 35%, rgba(30,16,8,.72) 100%); }
+  .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 70%; }
+  @media (max-aspect-ratio: 1/1) { .hero > img { object-position: 22% 75%; } }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,16,8,0) 30%, rgba(30,16,8,.62) 100%), linear-gradient(90deg, rgba(30,16,8,.38) 0%, rgba(30,16,8,0) 60%); }
   .hero .wrap { position: relative; z-index: 1; width: 100%; padding-bottom: clamp(32px, 6vw, 72px); }
   .hero h1 { font-size: clamp(2.6rem, 8vw, 6.4rem); line-height: .92; max-width: 11ch; letter-spacing: -0.035em; }
   .hero p { font-size: clamp(1.05rem, 1.6vw, 1.25rem); max-width: 44ch; margin: 18px 0 0; color: rgba(253,246,227,.88); }
@@ -162,6 +163,22 @@
   .card-tag { position: absolute; left: 10px; top: 10px; z-index: 1; background: var(--crema); color: var(--ink); font-size: .75rem; font-weight: 700; padding: 4px 9px; border-radius: 4px; }
   .card h3 { font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.15; margin-top: 16px; letter-spacing: -0.01em; }
   .card p { margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
+
+  .format-block + .format-block { margin-top: clamp(56px, 7vw, 96px); }
+  .format-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 32px; padding-bottom: 14px; margin-bottom: clamp(20px, 2.5vw, 32px); border-bottom: 2px solid var(--ink); }
+  .format-head h3 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); line-height: 1; }
+  .format-head p { margin: 0; color: var(--muted); max-width: 52ch; }
+
+  /* ---------- franja de colores ---------- */
+  .palette { padding: clamp(48px, 6vw, 80px) 0 0; }
+  .palette-track { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding: 4px var(--gutter) 10px; scrollbar-width: thin; }
+  @media (min-width: 1400px) { .palette-track { padding-left: calc((100vw - var(--wrap)) / 2 + var(--gutter)); scroll-padding-inline-start: calc((100vw - var(--wrap)) / 2 + var(--gutter)); } }
+  .swatch-card { flex: none; width: clamp(170px, 22vw, 250px); scroll-snap-align: start; text-decoration: none; }
+  .swatch-card .ph { aspect-ratio: 3 / 4; overflow: hidden; background: var(--photo-bg); }
+  .swatch-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+  @media (hover: hover) { .swatch-card:hover img { transform: scale(1.04); } }
+  .swatch-card span { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-weight: 700; font-size: .95rem; }
+  .swatch-card span::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--dot); flex: none; }
 
   /* ---------- beneficios ---------- */
   .perks { background: var(--crema-2); padding: clamp(36px, 5vw, 56px) 0; }
@@ -320,7 +337,7 @@
 <!-- ============ INICIO ============ -->
 <main id="home">
   <section class="hero">
-    <img src="fotos/almohadon-%20sillon%20de%20piso/foto%20(5).jpg" alt="Almohadón-sillón de piso en pana verde oliva junto a una lámpara encendida" fetchpriority="high">
+    <img src="img/portada.jpg" alt="Almohadón-sillón de piso en pana verde oliva sobre un piso de parquet, con luz de sol y una planta" fetchpriority="high">
     <div class="wrap">
       <h1>Almohadones a la medida de tu casa</h1>
       <p>Sillones de piso, sets estilo futón y almohadones capitoné cosidos a mano. Vos elegís la medida y el color.</p>
@@ -331,6 +348,14 @@
     </div>
   </section>
 
+  <section class="palette" aria-labelledby="palette-t">
+    <div class="wrap section-head">
+      <h2 id="palette-t">Del color que quieras</h2>
+      <p class="lede">Cada modelo se hace en cualquiera de los colores de pana. Tocá una foto para ver el modelo.</p>
+    </div>
+    <div class="palette-track" id="palette"></div>
+  </section>
+
   <section class="section" id="modelos" aria-labelledby="modelos-t">
     <div class="wrap">
       <div class="section-head">
@@ -338,7 +363,22 @@
         <p class="lede">Todos se hacen por pedido, en la medida que necesites. La medida que figura es la de las fotos.</p>
       </div>
       <div class="chips" id="chips" role="group" aria-label="Filtrar modelos"></div>
-      <div class="grid" id="grid" aria-live="polite"></div>
+      <div aria-live="polite">
+        <div class="format-block" id="regulares">
+          <div class="format-head">
+            <h3>Almohadones regulares</h3>
+            <p>Capitoné con relleno: mullidos, con los botones que les dan su forma. Para piso, futón, sillas y exterior.</p>
+          </div>
+          <div class="grid" id="grid-regular"></div>
+        </div>
+        <div class="format-block" id="placa">
+          <div class="format-head">
+            <h3>Almohadones de placa</h3>
+            <p>Goma espuma en placa: firmes, de bordes rectos y cortados a la forma exacta de tu sillón, silla o banco.</p>
+          </div>
+          <div class="grid" id="grid-placa"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -398,6 +438,7 @@
       <div class="section-head"><h2 id="faq-t">Preguntas frecuentes</h2></div>
       <div class="faq">
         <details><summary>¿Cómo hago un pedido?</summary><p>Escribinos por WhatsApp contando qué modelo te interesa. Desde la página de cada modelo podés completar medida y color, y el mensaje se arma solo.</p></details>
+        <details><summary>¿Qué diferencia hay entre un almohadón regular y uno de placa?</summary><p>El regular va relleno y capitoné: es mullido y se adapta al cuerpo. El de placa lleva goma espuma en una sola pieza: es firme, mantiene los bordes rectos y se corta a la forma exacta que necesites, incluso redondeada o en media luna.</p></details>
         <details><summary>¿Puedo pedir una medida especial?</summary><p>Sí, todo se hace por pedido. Mandanos ancho y largo en centímetros y te pasamos un presupuesto.</p></details>
         <details><summary>¿Hay telas para exterior?</summary><p>Sí. Para jardín y camastros usamos tela Panamá, apta exterior. Para interior, pana antimanchas o tela antidesgarro.</p></details>
         <details><summary>¿Hacen envíos?</summary><p>Sí, enviamos a todo el país. En Córdoba Capital también podés coordinar el retiro.</p></details>
@@ -480,49 +521,49 @@
   // Catálogo. pana: true => se ofrece el selector de colores en la ficha.
   const PRODUCTOS = [
     {
-      id: "sillon-de-piso-oliva", nombre: "Almohadón-sillón de piso", cat: ["living"],
+      id: "sillon-de-piso-oliva", nombre: "Almohadón-sillón de piso", formato: "regular", cat: ["living"],
       resumen: "Pana premium · 140 × 70 cm",
       descripcion: "Un almohadón grande para armar un rincón de lectura en el living o el jardín. En las fotos, en pana premium verde oliva.",
       tela: "Pana premium", pana: true, medida: "140 × 70 cm", uso: "Living, dormitorio, jardín",
-      carpeta: "almohadon- sillon de piso", fotos: ["foto (2).jpg","foto (5).jpg","foto (1).jpg","foto (3).jpg","foto (4).jpg","foto (6).jpg"]
+      carpeta: "almohadon- sillon de piso", fotos: ["n23.jpg","foto (2).jpg","foto (5).jpg","foto (1).jpg","foto (3).jpg","foto (4).jpg","foto (6).jpg"]
     },
     {
-      id: "almohadon-de-piso", nombre: "Almohadón de piso", cat: ["living"],
+      id: "almohadon-de-piso", nombre: "Almohadón de piso", formato: "regular", cat: ["living"],
       resumen: "Pana · 140 × 65 cm",
-      descripcion: "Para sentarse o recostarse a leer en el piso. En las fotos, en pana bordó y verde oliva.",
+      descripcion: "Para sentarse o recostarse a leer en el piso. En las fotos, en pana bordó, fucsia y verde oliva.",
       tela: "Pana", pana: true, medida: "140 × 65 cm", uso: "Living, dormitorio",
-      carpeta: "Almohadones-de-piso", fotos: ["foto (3).jpg","foto (4).jpg","foto (1).jpg","foto (5).jpg","foto (2).jpg", MUESTRARIO]
+      carpeta: "Almohadones-de-piso", fotos: ["foto (3).jpg","n35.jpg","foto (4).jpg","foto (1).jpg","foto (5).jpg","foto (2).jpg", MUESTRARIO]
     },
     {
-      id: "set-almohadones-sillones-futon", nombre: "Set sillón estilo futón", cat: ["futon", "living"],
+      id: "set-almohadones-sillones-futon", nombre: "Set sillón estilo futón", formato: "regular", cat: ["futon", "living"],
       resumen: "Pana antimanchas · a medida",
-      descripcion: "Asiento capitoné con respaldo, para armar un living bajo, un sillón de piso o vestir un banco o camastro. En las fotos, en pana bordó y en tono tabaco.",
+      descripcion: "Asiento capitoné con respaldo, para armar un living bajo, un sillón de piso o vestir un banco o camastro. En las fotos, en pana bordó, azul, chocolate y tabaco.",
       tela: "Pana antimanchas", pana: true, medida: "A medida", uso: "Living, camastro",
-      carpeta: "set-almohadones-sillones-futon", fotos: ["bordo-1.jpg","bordo-2.jpg","tabaco-1.jpg","foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg", MUESTRARIO]
+      carpeta: "set-almohadones-sillones-futon", fotos: ["bordo-1.jpg","n36.jpg","bordo-2.jpg","n41.jpg","n42.jpg","tabaco-1.jpg","n40.jpg","foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg", MUESTRARIO]
     },
     {
-      id: "almohadon-estilo-futon-individual-o-set", nombre: "Almohadón estilo futón", cat: ["futon"],
+      id: "almohadon-estilo-futon-individual-o-set", nombre: "Almohadón estilo futón", formato: "regular", cat: ["futon"],
       resumen: "Pana antimanchas · individual o set",
-      descripcion: "Almohadón capitoné para piso, camastro o set de jardín. Se pide de a uno o en set, en la medida y el color que quieras.",
+      descripcion: "Almohadón capitoné para piso, camastro o set de jardín. Se pide de a uno o en set, en la medida y el color que quieras. En las fotos, en azul, violeta, gris y celeste.",
       tela: "Pana antimanchas", pana: true, medida: "A medida", uso: "Piso, camastro, jardín",
-      carpeta: "almohadon-estilo-futon-individual-o-set", fotos: ["foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg", MUESTRARIO, "muestrario-pana-jaguar-2.jpg"]
+      carpeta: "almohadon-estilo-futon-individual-o-set", fotos: ["n21.jpg","n56.jpg","n22.jpg","n31.jpg","n32.jpg","foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg", MUESTRARIO, "muestrario-pana-jaguar-2.jpg"]
     },
     {
-      id: "fundas-y-almohadones-de-respaldo", nombre: "Fundas y almohadones de respaldo", cat: ["fundas", "living"],
+      id: "fundas-y-almohadones-de-respaldo", nombre: "Fundas y almohadones de respaldo", formato: "regular", cat: ["fundas", "living"],
       resumen: "Para sumar color o renovar los tuyos",
       descripcion: "Almohadones de respaldo y fundas sueltas para completar un sillón, un futón o un banco, o para cambiarle la cara a los almohadones que ya tenés. En las fotos, en crudo y verde pistacho.",
       tela: "Pana y otras telas", pana: true, medida: "A medida", uso: "Sillón, futón, banco, cama",
       carpeta: "fundas-y-almohadones-de-respaldo", fotos: ["foto-2.jpg","foto-1.jpg"]
     },
     {
-      id: "almohadones-con-cierre", nombre: "Almohadones con funda y cierre", cat: ["living"],
-      resumen: "Asiento y respaldo · hechos a la forma de tu sillón",
-      descripcion: "Almohadones de asiento y respaldo con funda desmontable y cierre, cortados a la forma de tu sillón. Mandanos una foto y las medidas y te pasamos presupuesto.",
+      id: "almohadones-con-cierre", nombre: "Placa con funda y cierre", formato: "placa", cat: ["living"],
+      resumen: "Cortados a la forma de tu sillón",
+      descripcion: "Almohadones de asiento y respaldo de placa de goma espuma, con funda desmontable y cierre. Se cortan a la forma de tu sillón: rectos, redondeados o en media luna. Mandanos una foto y las medidas y te pasamos presupuesto.",
       tela: "A elección", pana: true, medida: "A medida", uso: "Sillones, butacas",
-      carpeta: "almohadones-con-cierre", fotos: ["foto-1.jpg","foto-2.jpg"]
+      carpeta: "almohadones-con-cierre", fotos: ["n43.jpg","n44.jpg","n45.jpg","foto-1.jpg","foto-2.jpg"]
     },
     {
-      id: "set-almohadones-camastro-estilo-futon", nombre: "Set para camastro y jardín", cat: ["exterior", "futon"],
+      id: "set-almohadones-camastro-estilo-futon", nombre: "Set para camastro y jardín", formato: "regular", cat: ["exterior", "futon"],
       resumen: "Tela Panamá apta exterior · a medida",
       descripcion: "Almohadones capitoné en tela Panamá, pensados para estar afuera. Mandanos las medidas de tu camastro o reposera y te pasamos presupuesto.",
       tela: "Panamá (apta exterior)", pana: false, medida: "A medida", uso: "Camastro, jardín, galería",
@@ -531,18 +572,39 @@
               "../set-almohadones-jardín-camastro-estilo-futon/foto (3).jpg","../set-almohadones-jardín-camastro-estilo-futon/foto (7).jpg"]
     },
     {
-      id: "almohadon-sillon", nombre: "Almohadón-sillón", cat: ["exterior", "living"],
+      id: "almohadon-sillon", nombre: "Almohadón-sillón", formato: "regular", cat: ["exterior", "living"],
       resumen: "Tela antidesgarro · 120 × 70 cm",
       descripcion: "Va en el camastro, en el piso o en el jardín. En las fotos, en tela antidesgarro gris petróleo.",
       tela: "Antidesgarro", pana: false, medida: "120 × 70 cm", uso: "Camastro, piso, jardín",
       carpeta: "almohadon-sillon", fotos: ["foto (1).jpg","foto (2).jpg","foto (3).jpg"]
     },
     {
-      id: "almohadones-para-sillas-acapulco-o-asientos", nombre: "Almohadón para silla Acapulco", cat: ["sillas"],
+      id: "almohadones-para-sillas-acapulco-o-asientos", nombre: "Almohadón para silla Acapulco", formato: "regular", cat: ["sillas"],
       resumen: "85 × 60 cm · para cualquier silla",
       descripcion: "Pensado para sillas Acapulco, pero sirve para cualquier silla o asiento. Consultanos por colores.",
       tela: "A elección", pana: false, medida: "85 × 60 cm", uso: "Sillas, asientos",
       carpeta: "Almohadones-para-sillas-acapulco-o-asientos", fotos: ["foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg"]
+    },
+    {
+      id: "almohadones-sillas-butacas", nombre: "Almohadones para sillas y butacas", formato: "regular", cat: ["sillas"],
+      resumen: "Capitoné con tiras · en muchos colores",
+      descripcion: "Almohadones capitoné con tiras para atarlos a la silla, la butaca o el banco. Se hacen en la medida de tu asiento y en el color que quieras: en las fotos, naranja, rojo, verde esmeralda, celeste, bordó, verde salvia, chocolate y blanco.",
+      tela: "Pana antimanchas", pana: true, medida: "A medida", uso: "Sillas, butacas, bancos",
+      carpeta: "almohadones-sillas-butacas", fotos: ["n28.jpg","n39.jpg","n46.jpg","n53.jpg","n27.jpg","n07.jpg","n54.jpg","n08.jpg","n13.jpg","n11.jpg","n33.jpg","n38.jpg","n29.jpg","n30.jpg"]
+    },
+    {
+      id: "placa-sillon-de-piso", nombre: "Sillón de piso de placa", formato: "placa", cat: ["living"],
+      resumen: "Asiento y respaldo de goma espuma · a medida",
+      descripcion: "Asiento de placa de goma espuma con respaldo, para armar un sillón bajo, firme y prolijo. En las fotos, en pana gris.",
+      tela: "Pana", pana: true, medida: "A medida", uso: "Living, dormitorio",
+      carpeta: "placa-sillon-de-piso", fotos: ["n50.jpg","n51.jpg","n52.jpg"]
+    },
+    {
+      id: "placa-sillas", nombre: "Almohadones de placa para sillas", formato: "placa", cat: ["sillas"],
+      resumen: "Goma espuma con tiras · finos y firmes",
+      descripcion: "Almohadones finos de placa de goma espuma, con tiras para sujetarlos a la silla. También los hacemos largos para bancos. En las fotos, en negro y verde agua.",
+      tela: "A elección", pana: true, medida: "A medida", uso: "Sillas, bancos",
+      carpeta: "placa-sillas", fotos: ["n47.jpg","n48.jpg","n49.jpg","n20.jpg"]
     }
   ];
   const ALIAS = { "set-jardin-camastro": "set-almohadones-camastro-estilo-futon" };
@@ -555,11 +617,9 @@
 
   /* ---------- catálogo con filtro ---------- */
   let filtro = 'todos';
-  function renderGrid() {
-    const lista = PRODUCTOS.filter(p => filtro === 'todos' || p.cat.includes(filtro));
-    $('#grid').innerHTML = lista.map(p => {
-      const fotos = p.fotos.filter(f => !f.includes('muestrario'));
-      return `
+  function cardHTML(p) {
+    const fotos = p.fotos.filter(f => !f.includes('muestrario'));
+    return `
       <a class="card" href="?p=${p.id}" data-product="${p.id}">
         <div class="card-img">
           ${p.cat.includes('exterior') ? '<span class="card-tag">Apto exterior</span>' : ''}
@@ -569,7 +629,18 @@
         <h3>${p.nombre}</h3>
         <p>${p.resumen}</p>
       </a>`;
-    }).join('');
+  }
+  function renderGrid() {
+    // los modelos con fotos más coloridas van primero
+    const ORDEN = ['almohadones-sillas-butacas', 'almohadon-estilo-futon-individual-o-set', 'almohadon-de-piso', 'set-almohadones-sillones-futon', 'sillon-de-piso-oliva'];
+    const pos = id => { const i = ORDEN.indexOf(id); return i < 0 ? 99 : i; };
+    const lista = PRODUCTOS.filter(p => filtro === 'todos' || p.cat.includes(filtro))
+      .map((p, i) => [p, i]).sort((a, b) => (pos(a[0].id) - pos(b[0].id)) || (a[1] - b[1])).map(x => x[0]);
+    ['regular', 'placa'].forEach(f => {
+      const items = lista.filter(p => p.formato === f);
+      $('#grid-' + f).innerHTML = items.map(cardHTML).join('');
+      $(f === 'regular' ? '#regulares' : '#placa').hidden = items.length === 0;
+    });
   }
   $('#chips').innerHTML = CATEGORIAS.map(([k, n]) =>
     `<button type="button" class="chip" data-cat="${k}" aria-pressed="${k === filtro}">${n}</button>`).join('');
@@ -583,10 +654,32 @@
   });
   renderGrid();
 
+  /* ---------- franja de colores ---------- */
+  const DESTACADAS = [
+    ["almohadones-sillas-butacas", "n28.jpg", "Naranja", "#e2562b"],
+    ["almohadon-estilo-futon-individual-o-set", "n21.jpg", "Azul", "#2a4f9e"],
+    ["almohadon-de-piso", "n35.jpg", "Fucsia", "#c8146e"],
+    ["almohadones-sillas-butacas", "n46.jpg", "Verde esmeralda", "#1f6b5c"],
+    ["almohadon-estilo-futon-individual-o-set", "n56.jpg", "Violeta", "#5b1f4f"],
+    ["almohadones-sillas-butacas", "n39.jpg", "Rojo", "#c4142a"],
+    ["almohadones-sillas-butacas", "n53.jpg", "Celeste", "#7fa9b8"],
+    ["sillon-de-piso-oliva", "n23.jpg", "Verde oliva", "#6b7a32"],
+    ["set-almohadones-sillones-futon", "bordo-1.jpg", "Bordó", "#7e1530"]
+  ];
+  $('#palette').innerHTML = DESTACADAS.map(([id, f, color, dot]) => {
+    const p = PRODUCTOS.find(x => x.id === id);
+    return `<a class="swatch-card" href="?p=${id}" data-product="${id}">
+      <div class="ph"><img src="${src(p, f)}" alt="${p.nombre} en color ${color.toLowerCase()}" loading="lazy" decoding="async"></div>
+      <span style="--dot:${dot}">${color}</span></a>`;
+  }).join('');
+
   /* ---------- menú lateral ---------- */
   const drawer = $('#drawer');
-  $('#drawer-cats').innerHTML = CATEGORIAS.map(([k, n]) =>
-    `<a href="./#modelos" data-cat-link="${k}">${k === 'todos' ? 'Ver todos' : n}</a>`).join('');
+  $('#drawer-cats').innerHTML =
+    `<a href="./#regulares" data-cat-link="todos" data-anchor="regulares">Almohadones regulares</a>` +
+    `<a href="./#placa" data-cat-link="todos" data-anchor="placa">Almohadones de placa</a>` +
+    CATEGORIAS.filter(([k]) => k !== 'todos').map(([k, n]) =>
+      `<a href="./#modelos" data-cat-link="${k}">${n}</a>`).join('');
   $('#menu-open').addEventListener('click', () => drawer.showModal());
   $('#menu-close').addEventListener('click', () => drawer.close());
   // clic en el fondo oscuro cierra el menú
@@ -681,7 +774,7 @@
       e.preventDefault();
       if (!$('#detail').hidden) { history.pushState({}, '', location.pathname); route(); }
       setFiltro(catLink.dataset.catLink);
-      document.getElementById('modelos').scrollIntoView();
+      document.getElementById(catLink.dataset.anchor || 'modelos').scrollIntoView();
       return;
     }
     const card = e.target.closest('[data-product]');
