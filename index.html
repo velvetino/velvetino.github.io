@@ -152,8 +152,7 @@
   .chip { flex: none; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1.5px solid var(--line); background: none; cursor: pointer; font-weight: 600; font-size: .92rem; }
   .chip:hover { border-color: var(--ink); }
   .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--crema); }
-  .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(32px, 4vw, 56px) clamp(12px, 1.6vw, 22px); }
-  @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(32px, 4vw, 56px) clamp(12px, 1.6vw, 22px); }
   @media (max-width: 680px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .card { text-decoration: none; display: block; text-align: center; }
   .card-img { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--photo-bg); }
@@ -475,7 +474,7 @@
   ];
 
   const CATEGORIAS = [
-    ["todos", "Todos"], ["living", "Living y piso"], ["futon", "Estilo futón"], ["exterior", "Exterior"], ["sillas", "Sillas"]
+    ["todos", "Todos"], ["living", "Living y piso"], ["futon", "Estilo futón"], ["fundas", "Fundas y respaldos"], ["exterior", "Exterior"], ["sillas", "Sillas"]
   ];
 
   // Catálogo. pana: true => se ofrece el selector de colores en la ficha.
@@ -497,9 +496,9 @@
     {
       id: "set-almohadones-sillones-futon", nombre: "Set sillón estilo futón", cat: ["futon", "living"],
       resumen: "Pana antimanchas · a medida",
-      descripcion: "Asiento y respaldo capitoné para armar un living bajo, un sillón de piso o vestir un camastro.",
+      descripcion: "Asiento capitoné con respaldo, para armar un living bajo, un sillón de piso o vestir un banco o camastro. En las fotos, en pana bordó y en tono tabaco.",
       tela: "Pana antimanchas", pana: true, medida: "A medida", uso: "Living, camastro",
-      carpeta: "set-almohadones-sillones-futon", fotos: ["foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg", MUESTRARIO]
+      carpeta: "set-almohadones-sillones-futon", fotos: ["bordo-1.jpg","bordo-2.jpg","tabaco-1.jpg","foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg", MUESTRARIO]
     },
     {
       id: "almohadon-estilo-futon-individual-o-set", nombre: "Almohadón estilo futón", cat: ["futon"],
@@ -509,12 +508,26 @@
       carpeta: "almohadon-estilo-futon-individual-o-set", fotos: ["foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg", MUESTRARIO, "muestrario-pana-jaguar-2.jpg"]
     },
     {
+      id: "fundas-y-almohadones-de-respaldo", nombre: "Fundas y almohadones de respaldo", cat: ["fundas", "living"],
+      resumen: "Para sumar color o renovar los tuyos",
+      descripcion: "Almohadones de respaldo y fundas sueltas para completar un sillón, un futón o un banco, o para cambiarle la cara a los almohadones que ya tenés. En las fotos, en crudo y verde pistacho.",
+      tela: "Pana y otras telas", pana: true, medida: "A medida", uso: "Sillón, futón, banco, cama",
+      carpeta: "fundas-y-almohadones-de-respaldo", fotos: ["foto-2.jpg","foto-1.jpg"]
+    },
+    {
+      id: "almohadones-con-cierre", nombre: "Almohadones con funda y cierre", cat: ["living"],
+      resumen: "Asiento y respaldo · hechos a la forma de tu sillón",
+      descripcion: "Almohadones de asiento y respaldo con funda desmontable y cierre, cortados a la forma de tu sillón. Mandanos una foto y las medidas y te pasamos presupuesto.",
+      tela: "A elección", pana: true, medida: "A medida", uso: "Sillones, butacas",
+      carpeta: "almohadones-con-cierre", fotos: ["foto-1.jpg","foto-2.jpg"]
+    },
+    {
       id: "set-almohadones-camastro-estilo-futon", nombre: "Set para camastro y jardín", cat: ["exterior", "futon"],
       resumen: "Tela Panamá apta exterior · a medida",
       descripcion: "Almohadones capitoné en tela Panamá, pensados para estar afuera. Mandanos las medidas de tu camastro o reposera y te pasamos presupuesto.",
       tela: "Panamá (apta exterior)", pana: false, medida: "A medida", uso: "Camastro, jardín, galería",
       carpeta: "set-almohadones-camastro-estilo-futon",
-      fotos: ["foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg","foto (5).jpg","foto (6).jpg",
+      fotos: ["foto (1).jpg","crudo-reposera.jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg","foto (5).jpg","foto (6).jpg",
               "../set-almohadones-jardín-camastro-estilo-futon/foto (3).jpg","../set-almohadones-jardín-camastro-estilo-futon/foto (7).jpg"]
     },
     {
