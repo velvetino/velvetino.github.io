@@ -135,18 +135,12 @@
   @media (max-aspect-ratio: 1/1) { .hero > img { object-position: 22% 75%; } }
   .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,16,8,0) 30%, rgba(30,16,8,.62) 100%), linear-gradient(90deg, rgba(30,16,8,.38) 0%, rgba(30,16,8,0) 60%); }
   .hero .wrap { position: relative; z-index: 1; width: 100%; max-width: none; padding: clamp(20px, 3vw, 40px) clamp(16px, 2.2vw, 36px) clamp(28px, 4.5vw, 56px); }
-  /* Título que llena el ancho: cada línea se escala por JS (fitTitle) hasta ocupar el ancho disponible */
+  /* Título que llena el ancho: fitTitle escala las líneas hasta ocupar el ancho disponible */
   .hero h1 { width: 100%; letter-spacing: -0.035em; }
   .hero h1 .ln { display: block; width: max-content; white-space: nowrap; line-height: .86; font-size: 6rem; }
-  /* A: ancha, cada línea a su propio tamaño (bloque justificado) */
-  .hero[data-titulo="a"] h1 { font-stretch: 125%; font-weight: 800; }
-  .hero[data-titulo="a"] h1 .ln { line-height: .84; }
-  /* B: angosta y en mayúsculas, muy alta */
-  .hero[data-titulo="b"] h1 { font-stretch: 62%; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; }
-  .hero[data-titulo="b"] h1 .ln { line-height: .82; }
-  /* C: ancha, un solo tamaño para todas las líneas */
-  .hero[data-titulo="c"] h1 { font-stretch: 125%; font-weight: 700; }
-  .hero[data-titulo="c"] h1 .ln { line-height: .9; }
+  /* letra ancha, todas las líneas del mismo tamaño */
+  .hero h1 { font-stretch: 125%; font-weight: 700; }
+  .hero h1 .ln { line-height: .9; }
   .hero p { font-size: clamp(.95rem, 1.2vw, 1.05rem); max-width: 46ch; margin: 20px 0 0; color: rgba(253,246,227,.9); text-transform: lowercase; }
   .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
   .hero .btn { min-height: 42px; padding: 0 18px; font-size: .9rem; border-width: 1.5px; }
@@ -348,7 +342,7 @@
 
 <!-- ============ INICIO ============ -->
 <main id="home">
-  <section class="hero" data-titulo="a">
+  <section class="hero">
     <img src="img/portada.jpg" alt="Almohadón-sillón de piso en pana verde oliva sobre un piso de parquet, con luz de sol y una planta" fetchpriority="high">
     <div class="wrap">
       <h1 aria-label="Almohadones a la medida de tu casa"><span class="ln" aria-hidden="true">Almohadones</span><span class="ln" aria-hidden="true">a la medida</span><span class="ln" aria-hidden="true">de tu casa</span></h1>
@@ -668,8 +662,6 @@
 
   /* ---------- título de portada que llena el ancho ---------- */
   const hero = $('.hero');
-  const variante = new URLSearchParams(location.search).get('titulo');
-  if (['a', 'b', 'c'].includes(variante)) hero.dataset.titulo = variante;
   // Probamos repartir el título en 2, 3 o 4 líneas y nos quedamos con la que más llena el espacio
   const REPARTOS = [
     ['Almohadones a la', 'medida de tu casa'],
@@ -679,7 +671,6 @@
   function fitTitle() {
     const h1 = hero.querySelector('h1'), wrap = hero.querySelector('.wrap');
     const altoPortada = Math.min(innerHeight * 0.82, 760);  // igual que min-height de .hero
-    const uniforme = hero.dataset.titulo === 'c';
     let mejor = null;
     for (const reparto of REPARTOS) {
       h1.innerHTML = reparto.map(t => `<span class="ln" aria-hidden="true">${t}</span>`).join('');
@@ -687,7 +678,7 @@
       lines.forEach(l => l.style.fontSize = '100px');
       const sizes = lines.map(l => 100 * W / l.getBoundingClientRect().width);
       const min = Math.min(...sizes);
-      lines.forEach((l, i) => l.style.fontSize = (uniforme ? min : sizes[i]) * 0.995 + 'px');
+      lines.forEach(l => l.style.fontSize = min * 0.995 + 'px');
       const resto = wrap.offsetHeight - h1.offsetHeight;
       const disponible = altoPortada - resto - 8;
       const k = Math.min(1, disponible / h1.offsetHeight);
