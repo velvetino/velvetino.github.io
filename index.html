@@ -134,10 +134,22 @@
   .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 70%; }
   @media (max-aspect-ratio: 1/1) { .hero > img { object-position: 22% 75%; } }
   .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,16,8,0) 30%, rgba(30,16,8,.62) 100%), linear-gradient(90deg, rgba(30,16,8,.38) 0%, rgba(30,16,8,0) 60%); }
-  .hero .wrap { position: relative; z-index: 1; width: 100%; padding-bottom: clamp(32px, 6vw, 72px); }
-  .hero h1 { font-size: clamp(2.6rem, 8vw, 6.4rem); line-height: .92; max-width: 11ch; letter-spacing: -0.035em; }
-  .hero p { font-size: clamp(1.05rem, 1.6vw, 1.25rem); max-width: 44ch; margin: 18px 0 0; color: rgba(253,246,227,.88); }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero .wrap { position: relative; z-index: 1; width: 100%; max-width: none; padding: clamp(20px, 3vw, 40px) clamp(16px, 2.2vw, 36px) clamp(28px, 4.5vw, 56px); }
+  /* Título que llena el ancho: cada línea se escala por JS (fitTitle) hasta ocupar el ancho disponible */
+  .hero h1 { width: 100%; letter-spacing: -0.035em; }
+  .hero h1 .ln { display: block; width: max-content; white-space: nowrap; line-height: .86; font-size: 6rem; }
+  /* A: ancha, cada línea a su propio tamaño (bloque justificado) */
+  .hero[data-titulo="a"] h1 { font-stretch: 125%; font-weight: 800; }
+  .hero[data-titulo="a"] h1 .ln { line-height: .84; }
+  /* B: angosta y en mayúsculas, muy alta */
+  .hero[data-titulo="b"] h1 { font-stretch: 62%; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; }
+  .hero[data-titulo="b"] h1 .ln { line-height: .82; }
+  /* C: ancha, un solo tamaño para todas las líneas */
+  .hero[data-titulo="c"] h1 { font-stretch: 125%; font-weight: 700; }
+  .hero[data-titulo="c"] h1 .ln { line-height: .9; }
+  .hero p { font-size: clamp(.95rem, 1.2vw, 1.05rem); max-width: 46ch; margin: 20px 0 0; color: rgba(253,246,227,.9); text-transform: lowercase; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .hero .btn { min-height: 42px; padding: 0 18px; font-size: .9rem; border-width: 1.5px; }
   .hero .btn-ghost { color: #fdf6e3; }
   .hero .btn-ghost:hover { background: #fdf6e3; border-color: #fdf6e3; color: #2b1a10; }
   .hero .btn-red { --rojo-ink: #fdf6e3; }
@@ -336,10 +348,10 @@
 
 <!-- ============ INICIO ============ -->
 <main id="home">
-  <section class="hero">
+  <section class="hero" data-titulo="a">
     <img src="img/portada.jpg" alt="Almohadón-sillón de piso en pana verde oliva sobre un piso de parquet, con luz de sol y una planta" fetchpriority="high">
     <div class="wrap">
-      <h1>Almohadones a la medida de tu casa</h1>
+      <h1 aria-label="Almohadones a la medida de tu casa"><span class="ln" aria-hidden="true">Almohadones</span><span class="ln" aria-hidden="true">a la medida</span><span class="ln" aria-hidden="true">de tu casa</span></h1>
       <p>Sillones de piso, sets estilo futón y almohadones capitoné cosidos a mano. Vos elegís la medida y el color.</p>
       <div class="hero-actions">
         <a class="btn btn-red" href="#modelos">Ver modelos</a>
@@ -653,6 +665,42 @@
     const b = e.target.closest('.chip'); if (b) setFiltro(b.dataset.cat);
   });
   renderGrid();
+
+  /* ---------- título de portada que llena el ancho ---------- */
+  const hero = $('.hero');
+  const variante = new URLSearchParams(location.search).get('titulo');
+  if (['a', 'b', 'c'].includes(variante)) hero.dataset.titulo = variante;
+  // Probamos repartir el título en 2, 3 o 4 líneas y nos quedamos con la que más llena el espacio
+  const REPARTOS = [
+    ['Almohadones a la', 'medida de tu casa'],
+    ['Almohadones', 'a la medida', 'de tu casa'],
+    ['Almohadones', 'a la', 'medida de', 'tu casa']
+  ];
+  function fitTitle() {
+    const h1 = hero.querySelector('h1'), wrap = hero.querySelector('.wrap');
+    const altoPortada = Math.min(innerHeight * 0.82, 760);  // igual que min-height de .hero
+    const uniforme = hero.dataset.titulo === 'c';
+    let mejor = null;
+    for (const reparto of REPARTOS) {
+      h1.innerHTML = reparto.map(t => `<span class="ln" aria-hidden="true">${t}</span>`).join('');
+      const lines = [...h1.querySelectorAll('.ln')], W = h1.clientWidth;
+      lines.forEach(l => l.style.fontSize = '100px');
+      const sizes = lines.map(l => 100 * W / l.getBoundingClientRect().width);
+      const min = Math.min(...sizes);
+      lines.forEach((l, i) => l.style.fontSize = (uniforme ? min : sizes[i]) * 0.995 + 'px');
+      const resto = wrap.offsetHeight - h1.offsetHeight;
+      const disponible = altoPortada - resto - 8;
+      const k = Math.min(1, disponible / h1.offsetHeight);
+      // primero que llegue de borde a borde; entre las que llegan, la que más alto cubre
+      const area = Math.min(k, 0.97) * 1e7 + h1.offsetHeight * k * k;
+      if (!mejor || area > mejor.area) mejor = { reparto, k, area, sizes: lines.map(l => parseFloat(l.style.fontSize)) };
+    }
+    h1.innerHTML = mejor.reparto.map((t, i) =>
+      `<span class="ln" aria-hidden="true" style="font-size:${mejor.sizes[i] * mejor.k}px">${t}</span>`).join('');
+  }
+  fitTitle();
+  if (document.fonts) document.fonts.ready.then(fitTitle);
+  let fitRaf; addEventListener('resize', () => { cancelAnimationFrame(fitRaf); fitRaf = requestAnimationFrame(fitTitle); });
 
   /* ---------- franja de colores ---------- */
   const DESTACADAS = [
