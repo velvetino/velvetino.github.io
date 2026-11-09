@@ -194,32 +194,14 @@
   .perks span { color: var(--muted); font-size: .95rem; }
   @media (max-width: 680px) { .perks ul { grid-template-columns: 1fr; } }
 
-  /* ---------- muestrario: bloque de color partido ---------- */
-  .colors { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-  /* bloques de marca: siempre rojo del logo con crema, en claro y en oscuro */
-  .colors-panel, .site-foot { --rojo: #df0d1a; --rojo-ink: #fdf6e3; }
-  .colors-panel { background: var(--rojo); color: var(--rojo-ink); padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 64px); display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
-  .colors-panel h2 { font-size: clamp(2.4rem, 5.5vw, 4.4rem); line-height: .95; }
-  .colors-panel p { margin: 16px 0 0; max-width: 38ch; opacity: .9; }
-  .colors-panel .picked-name { font-stretch: 125%; font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1; margin: 0 0 6px; }
-  .colors-panel .picked-sub { margin: 0 0 18px; opacity: .85; font-size: .95rem; }
-  .colors-panel .btn { color: var(--rojo-ink); }
-  .colors-panel .btn:hover { background: var(--rojo-ink); border-color: var(--rojo-ink); color: var(--rojo); }
-  .colors-swatches { background: var(--crema-2); padding: clamp(28px, 5vw, 64px) clamp(16px, 4vw, 56px); display: flex; flex-direction: column; justify-content: center; }
-  .bolt { display: grid; grid-template-columns: repeat(13, 1fr); gap: 6px; }
+  /* bloque de marca: siempre rojo del logo con crema, en claro y en oscuro */
+  .site-foot { --rojo: #df0d1a; --rojo-ink: #fdf6e3; }
   .swatch {
-    --c: #888; position: relative; aspect-ratio: 1 / 2.4; border: 0; padding: 0; cursor: pointer; border-radius: 4px;
+    --c: #888; position: relative; border: 0; padding: 0; cursor: pointer;
     background: linear-gradient(100deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 40%, rgba(0,0,0,.2) 100%), var(--c);
     transition: transform .25s ease;
   }
-  .swatch:hover { transform: translateY(-4px); }
-  .swatch[aria-pressed="true"] { transform: translateY(-8px); box-shadow: 0 0 0 2px var(--crema-2), 0 0 0 4px var(--ink); }
-  .note { color: var(--muted); font-size: .88rem; margin: 22px 0 0; max-width: 62ch; }
-  @media (max-width: 900px) {
-    .colors { grid-template-columns: minmax(0, 1fr); }
-    .bolt { grid-template-columns: repeat(9, 1fr); }
-  }
-  @media (max-width: 420px) { .bolt { grid-template-columns: repeat(7, 1fr); } }
+  .swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--crema-2), 0 0 0 4px var(--ink); }
 
   /* ---------- cómo pedir ---------- */
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); counter-reset: s; }
@@ -330,7 +312,6 @@
       </summary>
       <div class="drawer-sub" id="drawer-cats"></div>
     </details>
-    <a href="./#colores" data-home-anchor>Colores de pana</a>
     <a href="./#como-pedir" data-home-anchor>Cómo pedir</a>
     <a href="./#preguntas" data-home-anchor>Preguntas frecuentes</a>
   </nav>
@@ -409,24 +390,6 @@
       </ul>
     </div>
   </div>
-
-  <section id="colores" class="colors" aria-labelledby="colores-t">
-    <div class="colors-panel">
-      <div>
-        <h2 id="colores-t">26 colores de pana</h2>
-        <p>La pana antimanchas viene en todos estos tonos. Tocá uno para elegirlo y consultalo por WhatsApp.</p>
-      </div>
-      <div aria-live="polite">
-        <p class="picked-name" id="swatch-name">New Olive</p>
-        <p class="picked-sub">Pana antimanchas</p>
-        <a class="btn" id="swatch-wa" href="#" target="_blank" rel="noopener">Consultar este color</a>
-      </div>
-    </div>
-    <div class="colors-swatches">
-      <div class="bolt" id="bolt" role="group" aria-label="Colores de pana"></div>
-      <p class="note">Los colores en pantalla son aproximados: la pana cambia de tono con la luz. Si querés, te mandamos fotos de la tela real antes de confeccionar. Para exterior trabajamos con tela Panamá; consultanos los colores disponibles.</p>
-    </div>
-  </section>
 
   <section class="section" id="como-pedir" aria-labelledby="como-t">
     <div class="wrap">
@@ -726,19 +689,9 @@
   // cualquier enlace del menú lo cierra antes de navegar
   drawer.addEventListener('click', e => { if (e.target.closest('a')) drawer.close(); }, true);
 
-  /* ---------- muestrario ---------- */
+  /* ---------- botones de color (formulario de pedido) ---------- */
   const swatchHTML = ([n, c], i) =>
     `<button type="button" class="swatch" style="--c:${c}" data-i="${i}" aria-pressed="false" aria-label="${n}" title="${n}"></button>`;
-  const bolt = $('#bolt');
-  bolt.innerHTML = COLORES.map(swatchHTML).join('');
-  function pickHome(i) {
-    const n = COLORES[i][0];
-    bolt.querySelectorAll('.swatch').forEach(b => b.setAttribute('aria-pressed', b.dataset.i == i));
-    $('#swatch-name').textContent = n;
-    $('#swatch-wa').href = waLink(`Hola Velvetino! Me gusta la pana color ${n}. ¿Para qué modelos la tienen?`);
-  }
-  bolt.addEventListener('click', e => { const b = e.target.closest('.swatch'); if (b) pickHome(+b.dataset.i); });
-  pickHome(8);
 
   /* ---------- detalle ---------- */
   let current = null, colorPedido = null;
