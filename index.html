@@ -175,16 +175,36 @@
   .format-head h3 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); line-height: 1; }
   .format-head p { margin: 0; color: var(--muted); max-width: 52ch; }
 
-  /* ---------- franja de colores ---------- */
+  /* ---------- colores de pana: lista + vista grande ---------- */
   .palette { padding: clamp(48px, 6vw, 80px) 0 0; }
-  .palette-track { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding: 4px var(--gutter) 10px; scrollbar-width: thin; }
-  @media (min-width: 1400px) { .palette-track { padding-left: calc((100vw - var(--wrap)) / 2 + var(--gutter)); scroll-padding-inline-start: calc((100vw - var(--wrap)) / 2 + var(--gutter)); } }
-  .swatch-card { flex: none; width: clamp(170px, 22vw, 250px); scroll-snap-align: start; text-decoration: none; }
-  .swatch-card .ph { aspect-ratio: 3 / 4; overflow: hidden; background: var(--photo-bg); }
-  .swatch-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-  @media (hover: hover) { .swatch-card:hover img { transform: scale(1.04); } }
-  .swatch-card span { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-weight: 700; font-size: .95rem; }
-  .swatch-card span::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--dot); flex: none; }
+  .pal { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(24px, 5vw, 72px); align-items: start; }
+  .pal-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(16px, 3vw, 40px); }
+  .pal-list button { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: 14px; width: 100%; padding: 9px 0; border-bottom: 1px solid var(--line); font-stretch: 125%; font-weight: 800; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.15; color: var(--muted); transition: color .2s; }
+  .pal-list button img { width: 56px; height: 22px; object-fit: cover; border-radius: 3px; flex: none; transition: width .25s ease; }
+  .pal-list button:hover, .pal-list button[aria-pressed="true"] { color: var(--ink); }
+  .pal-list button[aria-pressed="true"] img { width: 84px; }
+  .pal-list button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .pal-view { position: sticky; top: 96px; scroll-margin-top: 76px; }
+  .pal-stage { position: relative; display: grid; place-items: center; aspect-ratio: 4 / 5; overflow: hidden; text-decoration: none;
+    background: linear-gradient(115deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 45%, rgba(0,0,0,.28) 100%), var(--c, #888); transition: background-color .35s ease; }
+  .pal-stage > img.photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .pal-stage figure { margin: 0; width: 78%; text-align: center; }
+  .pal-stage figure img { width: 100%; height: auto; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,.28); }
+  .pal-stage figcaption { margin-top: 12px; font-size: .85rem; font-weight: 600; color: var(--tx, #fdf6e3); opacity: .9; }
+  .pal-stage .tag { position: absolute; left: 14px; bottom: 14px; background: var(--crema); color: var(--ink); font-weight: 700; font-size: .88rem; padding: 7px 13px; border-radius: 999px; }
+  .pal-info { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-top: 16px; }
+  .pal-info strong { display: block; font-stretch: 125%; font-weight: 800; font-size: clamp(1.4rem, 2.4vw, 1.9rem); line-height: 1.05; }
+  .pal-info small { color: var(--muted); font-size: .9rem; }
+  .pal-info .btn { min-height: 42px; padding: 0 18px; font-size: .9rem; }
+  .pal-note { color: var(--muted); font-size: .86rem; margin: 18px 0 0; max-width: 60ch; }
+  @media (max-width: 860px) {
+    .pal { grid-template-columns: minmax(0, 1fr); }
+    .pal-view { position: static; order: -1; }
+    .pal-stage { aspect-ratio: 4 / 3.6; }
+    .pal-list button { font-size: .98rem; gap: 10px; }
+    .pal-list button img { width: 40px; height: 18px; }
+    .pal-list button[aria-pressed="true"] img { width: 56px; }
+  }
 
   /* ---------- beneficios ---------- */
   .perks { background: var(--crema-2); padding: clamp(36px, 5vw, 56px) 0; }
@@ -357,9 +377,21 @@
   <section class="palette" aria-labelledby="palette-t">
     <div class="wrap section-head">
       <h2 id="palette-t">Del color que quieras</h2>
-      <p class="lede">Cada modelo se hace en cualquiera de los colores de pana. Tocá una foto para ver el modelo.</p>
+      <p class="lede">Cada modelo se hace en cualquiera de los 26 colores de pana antimanchas. Elegí uno para verlo.</p>
     </div>
-    <div class="palette-track" id="palette"></div>
+    <div class="wrap pal">
+      <div>
+        <ul class="pal-list" id="pal-list" aria-label="Colores de pana"></ul>
+        <p class="pal-note">Los colores en pantalla son aproximados: la pana cambia de tono con la luz. Si querés, te mandamos fotos de la tela real antes de confeccionar.</p>
+      </div>
+      <div class="pal-view" aria-live="polite">
+        <a class="pal-stage" id="pal-stage"></a>
+        <div class="pal-info">
+          <div><strong id="pal-name"></strong><small>Pana antimanchas</small></div>
+          <a class="btn btn-red" id="pal-wa" href="#" target="_blank" rel="noopener">Consultar este color</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="section" id="modelos" aria-labelledby="modelos-t">
@@ -724,24 +756,48 @@
   if (document.fonts) document.fonts.ready.then(fitTitle);
   let fitRaf; addEventListener('resize', () => { cancelAnimationFrame(fitRaf); fitRaf = requestAnimationFrame(fitTitle); });
 
-  /* ---------- franja de colores ---------- */
-  const DESTACADAS = [
-    ["almohadones-sillas-butacas", "n28.jpg", "Naranja", "#e2562b"],
-    ["almohadon-estilo-futon-individual-o-set", "n21.jpg", "Azul", "#2a4f9e"],
-    ["almohadon-de-piso", "n35.jpg", "Fucsia", "#c8146e"],
-    ["almohadones-sillas-butacas", "n46.jpg", "Verde esmeralda", "#1f6b5c"],
-    ["almohadon-estilo-futon-individual-o-set", "n56.jpg", "Violeta", "#5b1f4f"],
-    ["almohadones-sillas-butacas", "n39.jpg", "Rojo", "#c4142a"],
-    ["almohadones-sillas-butacas", "n53.jpg", "Celeste", "#7fa9b8"],
-    ["sillon-de-piso-oliva", "n23.jpg", "Verde oliva", "#6b7a32"],
-    ["set-almohadones-sillones-futon", "bordo-1.jpg", "Bordó", "#7e1530"]
-  ];
-  $('#palette').innerHTML = DESTACADAS.map(([id, f, color, dot]) => {
-    const p = PRODUCTOS.find(x => x.id === id);
-    return `<a class="swatch-card" href="?p=${id}" data-product="${id}">
-      <div class="ph"><img src="${src(p, f)}" alt="${p.nombre} en color ${color.toLowerCase()}" loading="lazy" decoding="async"></div>
-      <span style="--dot:${dot}">${color}</span></a>`;
-  }).join('');
+  /* ---------- colores de pana ---------- */
+  // Foto de un almohadón real para los colores que la tienen: [modelo, foto]
+  const FOTO_COLOR = {
+    "Chicle": ["almohadon-de-piso", "n35.jpg"],
+    "Violeta": ["almohadon-estilo-futon-individual-o-set", "n56.jpg"],
+    "Blue Klein": ["almohadon-estilo-futon-individual-o-set", "n21.jpg"],
+    "Ruby": ["set-almohadones-sillones-futon", "bordo-1.jpg"],
+    "Hunter": ["almohadones-sillas-butacas", "n46.jpg"],
+    "New Orange": ["almohadones-sillas-butacas", "n39.jpg"],
+    "Agua": ["almohadones-sillas-butacas", "n53.jpg"]
+  };
+  const slug = n => n.toLowerCase().replace(/ /g, '-');
+  const claro = hex => { const v = parseInt(hex.slice(1), 16); return (0.299 * (v >> 16) + 0.587 * (v >> 8 & 255) + 0.114 * (v & 255)) > 150; };
+  $('#pal-list').innerHTML = COLORES.map(([n], i) =>
+    `<li><button type="button" data-i="${i}" aria-pressed="false"><img src="img/pana/${slug(n)}.jpg" alt="" loading="lazy" decoding="async">${n}</button></li>`).join('');
+  function elegirColor(i) {
+    const [n, hex] = COLORES[i], foto = FOTO_COLOR[n], stage = $('#pal-stage');
+    stage.style.setProperty('--c', hex);
+    stage.style.setProperty('--tx', claro(hex) ? '#3a2214' : '#fdf6e3');
+    if (foto) {
+      const p = PRODUCTOS.find(x => x.id === foto[0]);
+      stage.innerHTML = `<img class="photo" src="${src(p, foto[1])}" alt="${p.nombre} en pana ${n}"><span class="tag">Ver ${p.nombre.toLowerCase()}</span>`;
+      stage.href = `?p=${p.id}`; stage.dataset.product = p.id;
+    } else {
+      stage.innerHTML = `<figure><img src="img/pana/${slug(n)}.jpg" alt="Muestra de pana ${n}"><figcaption>Muestra real de la tela</figcaption></figure>`;
+      stage.removeAttribute('href'); delete stage.dataset.product;
+    }
+    $('#pal-name').textContent = n;
+    $('#pal-wa').href = waLink(`Hola Velvetino! Me gusta la pana color ${n}. ¿Para qué modelos la tienen?`);
+    $('#pal-list').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.i == i));
+  }
+  $('#pal-list').addEventListener('click', e => {
+    const b = e.target.closest('button[data-i]'); if (!b) return;
+    elegirColor(+b.dataset.i);
+    // en el celular la vista grande queda arriba de la lista: si no se ve, subir hasta ella
+    const v = $('.pal-view'), r = v.getBoundingClientRect();
+    if (getComputedStyle(v).position !== 'sticky' && (r.top < 60 || r.bottom > innerHeight))
+      v.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  });
+  if (matchMedia('(hover: hover)').matches)
+    $('#pal-list').addEventListener('mouseover', e => { const b = e.target.closest('button[data-i]'); if (b) elegirColor(+b.dataset.i); });
+  elegirColor(COLORES.findIndex(([n]) => n === 'Chicle'));
 
   /* ---------- menú lateral ---------- */
   const drawer = $('#drawer');
