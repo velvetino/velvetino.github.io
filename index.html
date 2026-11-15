@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Velvetino · Almohadones a medida hechos a mano en Córdoba</title>
-<meta name="description" content="Almohadones capitoné, sillones de piso y sets estilo futón hechos a mano en Córdoba. A la medida y del color que quieras. Envíos a todo el país.">
+<meta name="description" content="Almohadones capitoné, sillones de piso y sets estilo futón hechos a mano en Córdoba. A la medida y del color que quieras. Entregas en Córdoba Capital.">
 <meta property="og:title" content="Velvetino">
-<meta property="og:description" content="Almohadones a medida hechos a mano en Córdoba. Envíos a todo el país.">
+<meta property="og:description" content="Almohadones a medida hechos a mano en Córdoba Capital.">
 <meta property="og:url" content="https://velvetino.github.io/">
 <link rel="canonical" href="https://velvetino.github.io/">
 <meta property="og:image" content="https://velvetino.github.io/img/portada.jpg">
@@ -224,7 +224,7 @@
   .swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--crema-2), 0 0 0 4px var(--ink); }
 
   /* ---------- cómo pedir ---------- */
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); counter-reset: s; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 3vw, 40px); counter-reset: s; }
   .steps li { counter-increment: s; border-top: 2px solid var(--ink); padding-top: 18px; }
   .steps li::before { content: counter(s); font-stretch: 125%; font-weight: 900; font-size: 3.2rem; line-height: 1; color: var(--rojo); display: block; margin-bottom: 12px; }
   .steps h3 { font-size: 1.3rem; }
@@ -306,6 +306,35 @@
     .detail-info { position: static; }
   }
 
+  /* ---------- sobre mí ---------- */
+  .about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+  .about-photo { aspect-ratio: 4 / 5; overflow: hidden; background: var(--photo-bg); }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .about-text h2 { margin-bottom: 20px; }
+  .about-text > p { font-size: 1.12rem; max-width: 46ch; margin: 0 0 14px; }
+  .contact-list { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 16px; }
+  .contact-list .btn { min-height: 44px; padding: 0 18px; font-size: .95rem; }
+  .about-meta { color: var(--muted); font-size: .95rem; }
+  .about-meta a { color: var(--ink); text-underline-offset: 3px; }
+  @media (max-width: 760px) { .about { grid-template-columns: minmax(0, 1fr); } .about-photo { aspect-ratio: 4 / 3.4; } }
+  .steps h3 { font-size: 1.2rem; }
+  @media (max-width: 1000px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- compra más fácil ---------- */
+  .order .btn svg { width: 20px; height: 20px; }
+  .order-note { color: var(--muted); font-size: .85rem; margin: 12px 0 0; text-align: center; }
+  .wa-float { position: fixed; right: 18px; bottom: 18px; z-index: 25; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+    background: #25d366; color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.22); transition: transform .2s; }
+  .wa-float:hover { transform: scale(1.06); }
+  .wa-float svg { width: 30px; height: 30px; }
+  .buybar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 26; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: var(--crema); border-top: 1px solid var(--line); box-shadow: 0 -6px 18px rgba(0,0,0,.08); }
+  .buybar small { display: block; color: var(--muted); font-size: .78rem; }
+  .buybar strong { font-stretch: 112%; font-weight: 800; font-size: 1.2rem; }
+  .buybar .btn { min-height: 44px; padding: 0 18px; font-size: .95rem; }
+  @media (min-width: 861px) { .buybar { display: none !important; } }
+  @media (max-width: 860px) { body.en-modelo .wa-float { display: none; } body.en-modelo { padding-bottom: 72px; } }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; animation: none !important; }
     html { scroll-behavior: auto; }
@@ -314,7 +343,7 @@
 </head>
 <body>
 
-<div class="topbar">Envíos a todo el país. Hechos a mano en Córdoba.</div>
+<div class="topbar">Hechos a mano en Córdoba Capital, a tu medida.</div>
 
 <header class="site-head">
   <div class="wrap">
@@ -327,7 +356,7 @@
       <button class="icon-btn" id="theme-btn" type="button" aria-label="Cambiar a modo oscuro">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
       </button>
-      <a class="btn btn-red head-wa" data-wa href="#" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+      <a class="btn btn-red head-wa" data-wa href="#" target="_blank" rel="noopener" aria-label="Escribime por WhatsApp">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>
         <span class="label">WhatsApp</span>
       </a>
@@ -351,12 +380,13 @@
       <div class="drawer-sub" id="drawer-cats"></div>
     </details>
     <a href="./#precios" data-home-anchor>Precios</a>
-    <a href="./#como-pedir" data-home-anchor>Cómo pedir</a>
+    <a href="./#sobre-mi" data-home-anchor>Sobre mí</a>
+    <a href="./#como-pedir" data-home-anchor>Cómo comprar</a>
     <a href="./#preguntas" data-home-anchor>Preguntas frecuentes</a>
   </nav>
   <div class="drawer-foot">
-    <a class="btn btn-red" data-wa href="#" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
-    <p><a href="mailto:velvetinohome@gmail.com">velvetinohome@gmail.com</a><br>Hecho a mano en Córdoba, Argentina</p>
+    <a class="btn btn-red" data-wa href="#" target="_blank" rel="noopener">Escribime por WhatsApp</a>
+    <p><a data-ig data-ig-handle href="#" target="_blank" rel="noopener"></a><br><a data-tel href="#"></a><br><a href="mailto:velvetinohome@gmail.com">velvetinohome@gmail.com</a><br>Hecho a mano en Córdoba, Argentina</p>
   </div>
 </dialog>
 
@@ -382,7 +412,7 @@
     <div class="wrap pal">
       <div>
         <ul class="pal-list" id="pal-list" aria-label="Colores de pana"></ul>
-        <p class="pal-note">Los colores en pantalla son aproximados: la pana cambia de tono con la luz. Si querés, te mandamos fotos de la tela real antes de confeccionar.</p>
+        <p class="pal-note">Los colores en pantalla son aproximados: la pana cambia de tono con la luz. Si querés, te mando fotos de la tela real antes de coser.</p>
       </div>
       <div class="pal-view" aria-live="polite">
         <a class="pal-stage" id="pal-stage"></a>
@@ -425,13 +455,13 @@
       <ul>
         <li>
           <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 12h24v20H4zM28 19h8l6 7v6H28z"/><circle cx="12" cy="35" r="4"/><circle cx="35" cy="35" r="4"/></svg>
-          <strong>Envíos a todo el país</strong>
-          <span>O retirá en Córdoba Capital</span>
+          <strong>En Córdoba Capital</strong>
+          <span>Coordinamos la entrega o el retiro</span>
         </li>
         <li>
           <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M6 30 30 6l12 12-24 24H6z"/><path d="M14 22l4 4M20 16l4 4M26 10l4 4"/></svg>
           <strong>A tu medida</strong>
-          <span>Mandanos el ancho y el largo en cm</span>
+          <span>Pasame el ancho y el largo en cm</span>
         </li>
         <li>
           <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="7" y="10" width="34" height="28" rx="9"/><circle cx="18" cy="20" r="1.6" fill="currentColor"/><circle cx="30" cy="20" r="1.6" fill="currentColor"/><circle cx="18" cy="29" r="1.6" fill="currentColor"/><circle cx="30" cy="29" r="1.6" fill="currentColor"/></svg>
@@ -447,7 +477,7 @@
       <div>
         <h2 id="precios-t">Precios por medida</h2>
         <p class="lede">El precio es por almohadón. Para un set, se suma cada pieza: por ejemplo, un asiento de 120 × 60 y un respaldo de 120 × 60 son dos almohadones.</p>
-        <p class="lede">¿Necesitás otra medida? Escribinos y te pasamos el precio.</p>
+        <p class="lede">¿Necesitás otra medida? Escribime y te paso el precio.</p>
       </div>
       <table class="price-table">
         <thead><tr><th scope="col">Medida</th><th scope="col">Precio</th></tr></thead>
@@ -456,13 +486,30 @@
     </div>
   </section>
 
+  <section class="section faq-wrap" id="sobre-mi" aria-labelledby="sobre-t">
+    <div class="wrap about">
+      <div class="about-photo"><img src="fotos/almohadones-sillas-butacas/n28.jpg" alt="Almohadón capitoné naranja hecho a mano, con luz de sol" loading="lazy" decoding="async"></div>
+      <div class="about-text">
+        <h2 id="sobre-t">Hola, soy Miranda</h2>
+        <p>Detrás de Velvetino estoy yo, Miranda Frega. Hago cada almohadón a mano y por pedido, en Córdoba: vos me contás dónde lo vas a usar, la medida y el color, y lo coso para tu casa.</p>
+        <p>Si no sabés qué medida o qué color te conviene, mandame una foto del lugar y te ayudo a elegir. Te respondo yo, siempre.</p>
+        <div class="contact-list">
+          <a class="btn btn-red" data-wa href="#" target="_blank" rel="noopener">Escribime por WhatsApp</a>
+          <a class="btn btn-ghost" data-ig href="#" target="_blank" rel="noopener">Seguime en Instagram</a>
+        </div>
+        <p class="about-meta"><a data-tel href="#"></a> · <a data-ig-handle data-ig href="#" target="_blank" rel="noopener"></a></p>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="como-pedir" aria-labelledby="como-t">
     <div class="wrap">
-      <div class="section-head"><h2 id="como-t">Cómo pedir</h2></div>
+      <div class="section-head"><h2 id="como-t">Cómo comprar</h2><p class="lede">Son cuatro pasos y en todos te acompaño por WhatsApp.</p></div>
       <ol class="steps">
-        <li><h3>Elegí el modelo</h3><p>Mirá los modelos y quedate con el que mejor va con tu espacio: living, camastro, jardín o sillas.</p></li>
-        <li><h3>Mandanos medida y color</h3><p>Escribinos por WhatsApp con las medidas en centímetros y el color que te guste.</p></li>
-        <li><h3>Confirmá tu pedido</h3><p>Te confirmamos el precio y el tiempo de confección. Retirás en Córdoba Capital o te lo enviamos.</p></li>
+        <li><h3>Elegí modelo, medida y color</h3><p>En cada modelo ves el precio según la medida. Si dudás, mandame una foto del lugar y te ayudo a decidir.</p></li>
+        <li><h3>Pedilo por WhatsApp</h3><p>Tocá «Pedir por WhatsApp» y el mensaje se arma solo con todo lo que elegiste.</p></li>
+        <li><h3>Confirmamos y pagás</h3><p>Te confirmo el total y el tiempo de confección. Pagás por transferencia o con Mercado Pago.</p></li>
+        <li><h3>Lo recibís</h3><p>Coordinamos por WhatsApp la entrega o el retiro en Córdoba Capital.</p></li>
       </ol>
     </div>
   </section>
@@ -471,11 +518,12 @@
     <div class="wrap">
       <div class="section-head"><h2 id="faq-t">Preguntas frecuentes</h2></div>
       <div class="faq">
-        <details><summary>¿Cómo hago un pedido?</summary><p>Escribinos por WhatsApp contando qué modelo te interesa. Desde la página de cada modelo podés completar medida y color, y el mensaje se arma solo.</p></details>
+        <details><summary>¿Cómo hago un pedido?</summary><p>Entrá al modelo que te guste, elegí medida, cantidad y color, y tocá «Pedir por WhatsApp»: el mensaje se arma solo con todo lo que elegiste. Te respondo yo para confirmar.</p></details>
         <details><summary>¿Qué diferencia hay entre un almohadón regular y uno de placa?</summary><p>El regular va relleno y capitoné: es mullido y se adapta al cuerpo. El de placa lleva goma espuma en una sola pieza: es firme, mantiene los bordes rectos y se corta a la forma exacta que necesites, incluso redondeada o en media luna.</p></details>
-        <details><summary>¿Puedo pedir una medida especial?</summary><p>Sí, todo se hace por pedido. Si tu medida no está en la lista de precios, mandanos ancho y largo en centímetros y te pasamos el precio.</p></details>
-        <details><summary>¿Hay telas para exterior?</summary><p>Sí. Para jardín y camastros usamos tela Panamá, apta exterior. Para interior, pana antimanchas o tela antidesgarro.</p></details>
-        <details><summary>¿Hacen envíos?</summary><p>Sí, enviamos a todo el país. En Córdoba Capital también podés coordinar el retiro.</p></details>
+        <details><summary>¿Puedo pedir una medida especial?</summary><p>Sí, todo se hace por pedido. Si tu medida no está en la lista de precios, mandame ancho y largo en centímetros y te paso el precio.</p></details>
+        <details><summary>¿Hay telas para exterior?</summary><p>Sí. Para jardín y camastros uso tela Panamá, apta exterior. Para interior, pana antimanchas o tela antidesgarro.</p></details>
+        <details><summary>¿Dónde entregás?</summary><p>Por ahora trabajo solo en Córdoba Capital. Coordinamos por WhatsApp la entrega o el retiro.</p></details>
+        <details><summary>¿Cómo pago?</summary><p>Cuando te confirmo el pedido, te paso los datos para pagar por transferencia o con Mercado Pago.</p></details>
       </div>
     </div>
   </section>
@@ -500,7 +548,7 @@
         <dl class="specs" id="d-specs"></dl>
         <form class="order" id="order">
           <h2>Pedí el tuyo</h2>
-          <p>Completá lo que sepas; lo demás lo charlamos por WhatsApp.</p>
+          <p>Elegí medida, cantidad y color. Lo que no sepas, lo vemos juntos por WhatsApp.</p>
           <div class="field-row size-row">
             <div class="field"><label for="o-size">Medida</label><select id="o-size"></select></div>
             <div class="field"><label for="o-qty">Cantidad</label><input id="o-qty" type="number" inputmode="numeric" min="1" max="20" value="1"></div>
@@ -509,32 +557,51 @@
             <div class="field"><label for="o-w">Ancho (cm)</label><input id="o-w" inputmode="numeric" pattern="[0-9]*" placeholder="65"></div>
             <div class="field"><label for="o-l">Largo (cm)</label><input id="o-l" inputmode="numeric" pattern="[0-9]*" placeholder="140"></div>
           </div>
-          <p class="total" aria-live="polite"><span id="o-total-label">Total</span><strong id="o-total"></strong></p>
           <div id="o-colors-wrap">
             <span class="field-label" id="o-colors-label">Color de pana</span>
             <div class="mini-bolt" id="o-colors" role="group" aria-labelledby="o-colors-label"></div>
             <p class="picked" id="o-picked" aria-live="polite">Sin elegir</p>
           </div>
-          <button class="btn btn-red" type="submit">Enviar consulta por WhatsApp</button>
+          <p class="total" aria-live="polite"><span id="o-total-label">Total</span><strong id="o-total"></strong></p>
+          <button class="btn btn-red" type="submit">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa-icon"/></svg>
+            Pedir por WhatsApp
+          </button>
+          <p class="order-note">Se abre WhatsApp con tu pedido armado. Te respondo para confirmar el total, el tiempo de confección y el pago.</p>
         </form>
       </div>
     </div>
   </div>
 </main>
 
+<!-- barra de compra fija en el celular (solo en la página de un modelo) -->
+<div class="buybar" id="buybar" hidden>
+  <div><small id="bb-label">Total</small><strong id="bb-total"></strong></div>
+  <button class="btn btn-red" type="button" id="bb-btn">Pedir por WhatsApp</button>
+</div>
+
+<!-- botón flotante de WhatsApp -->
+<a class="wa-float" id="wa-float" data-wa href="#" target="_blank" rel="noopener" aria-label="Escribime por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa-icon"/></svg>
+</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wa-icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></symbol></svg>
+
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-cta">
       <div>
         <span class="logo" role="img" aria-label="Velvetino"></span>
-        <p>¿Tenés una medida en mente? Contanos y te pasamos presupuesto.</p>
+        <p>¿Tenés una medida en mente? Contame y te paso el precio.</p>
       </div>
-      <a class="btn" data-wa href="#" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+      <a class="btn" data-wa href="#" target="_blank" rel="noopener">Escribime por WhatsApp</a>
     </div>
     <div class="foot-bottom">
-      <span>Hecho a mano en Córdoba, Argentina</span>
+      <span>Hecho a mano por Miranda Frega en Córdoba, Argentina</span>
       <span class="foot-links">
+        <a data-ig href="#" target="_blank" rel="noopener">Instagram</a>
         <a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a>
+        <a data-tel href="#"></a>
         <a href="mailto:velvetinohome@gmail.com">velvetinohome@gmail.com</a>
       </span>
     </div>
@@ -543,6 +610,8 @@
 
 <script>
   const WA_NUMBER = '5493804595851';
+  const TELEFONO = '+54 9 380 459-5851';
+  const INSTAGRAM = 'https://www.instagram.com/velvetino.home/';
   const BASE = 'fotos/';
   const MUESTRARIO = 'muestrario-pana-jaguar.jpg';
 
@@ -619,14 +688,14 @@
     {
       id: "almohadones-con-cierre", medidas: "generales", nombre: "Placa con funda y cierre", formato: "placa", cat: ["living"],
       resumen: "Cortados a la forma de tu sillón",
-      descripcion: "Almohadones de asiento y respaldo de placa de goma espuma, con funda desmontable y cierre. Se cortan a la forma de tu sillón: rectos, redondeados o en media luna. Mandanos una foto y las medidas y te pasamos presupuesto.",
+      descripcion: "Almohadones de asiento y respaldo de placa de goma espuma, con funda desmontable y cierre. Se cortan a la forma de tu sillón: rectos, redondeados o en media luna. Mandame una foto y las medidas y te paso el precio.",
       tela: "A elección", pana: true, medida: "A medida", uso: "Sillones, butacas",
       carpeta: "almohadones-con-cierre", fotos: ["n43.jpg","n44.jpg","n45.jpg","foto-1.jpg","foto-2.jpg"]
     },
     {
       id: "set-almohadones-camastro-estilo-futon", medidas: "largos", nombre: "Set para camastro y jardín", formato: "regular", cat: ["exterior", "futon"],
       resumen: "Tela Panamá apta exterior · a medida",
-      descripcion: "Almohadones capitoné en tela Panamá, pensados para estar afuera. Mandanos las medidas de tu camastro o reposera y te pasamos presupuesto.",
+      descripcion: "Almohadones capitoné en tela Panamá, pensados para estar afuera. Mandame las medidas de tu camastro o reposera y te paso el precio.",
       tela: "Panamá (apta exterior)", pana: false, medida: "A medida", uso: "Camastro, jardín, galería",
       carpeta: "set-almohadones-camastro-estilo-futon",
       fotos: ["foto (1).jpg","crudo-reposera.jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg","foto (5).jpg","foto (6).jpg",
@@ -642,7 +711,7 @@
     {
       id: "almohadones-para-sillas-acapulco-o-asientos", medidas: "generales", nombre: "Almohadón para silla Acapulco", formato: "regular", cat: ["sillas"],
       resumen: "85 × 60 cm · para cualquier silla",
-      descripcion: "Pensado para sillas Acapulco, pero sirve para cualquier silla o asiento. Consultanos por colores.",
+      descripcion: "Pensado para sillas Acapulco, pero sirve para cualquier silla o asiento. Consultame por colores.",
       tela: "A elección", pana: false, medida: "85 × 60 cm", uso: "Sillas, asientos",
       carpeta: "Almohadones-para-sillas-acapulco-o-asientos", fotos: ["foto (1).jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg"]
     },
@@ -663,7 +732,7 @@
     {
       id: "placa-sillas", medidas: "sillas", nombre: "Almohadones de placa para sillas", formato: "placa", cat: ["sillas"],
       resumen: "Goma espuma con tiras · finos y firmes",
-      descripcion: "Almohadones finos de placa de goma espuma, con tiras para sujetarlos a la silla. También los hacemos largos para bancos. En las fotos, en negro y verde agua.",
+      descripcion: "Almohadones finos de placa de goma espuma, con tiras para sujetarlos a la silla. También los hago largos para bancos. En las fotos, en negro y verde agua.",
       tela: "A elección", pana: true, medida: "A medida", uso: "Sillas, bancos",
       carpeta: "placa-sillas", fotos: ["n47.jpg","n48.jpg","n49.jpg","n20.jpg"]
     }
@@ -674,7 +743,10 @@
   const waLink = (texto) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
   const $ = (s) => document.querySelector(s);
 
-  document.querySelectorAll('[data-wa]').forEach(a => a.href = waLink('Hola Velvetino! Quería hacer una consulta.'));
+  document.querySelectorAll('[data-wa]').forEach(a => a.href = waLink('¡Hola Miranda! Quería hacer una consulta sobre Velvetino.'));
+  document.querySelectorAll('[data-ig]').forEach(a => a.href = INSTAGRAM);
+  document.querySelectorAll('[data-ig-handle]').forEach(a => a.textContent = '@velvetino.home');
+  document.querySelectorAll('[data-tel]').forEach(a => { a.href = 'tel:+' + WA_NUMBER; a.textContent = TELEFONO; });
 
   const medidasDe = p => MEDIDAS[p.medidas || 'todas'].map(id => PRECIOS.find(x => x.id === id));
   const desde = p => Math.min(...medidasDe(p).map(x => x.precio));
@@ -784,7 +856,7 @@
       stage.removeAttribute('href'); delete stage.dataset.product;
     }
     $('#pal-name').textContent = n;
-    $('#pal-wa').href = waLink(`Hola Velvetino! Me gusta la pana color ${n}. ¿Para qué modelos la tienen?`);
+    $('#pal-wa').href = waLink(`¡Hola Miranda! Me gusta la pana color ${n}. ¿Para qué modelos la tenés?`);
     $('#pal-list').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.i == i));
   }
   $('#pal-list').addEventListener('click', e => {
@@ -869,7 +941,10 @@
     $('#o-custom').hidden = !!m;
     $('#o-total-label').textContent = m ? (cantidad() > 1 ? `Total por ${cantidad()} almohadones` : 'Total') : 'Total';
     $('#o-total').textContent = m ? pesos(m.precio * cantidad()) : 'A consultar';
+    $('#bb-label').textContent = $('#o-total-label').textContent;
+    $('#bb-total').textContent = $('#o-total').textContent;
   }
+  $('#bb-btn').addEventListener('click', () => $('#order').requestSubmit());
   $('#o-size').addEventListener('change', updateTotal);
   $('#o-qty').addEventListener('input', updateTotal);
   $('#thumbs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) showPhoto(+b.dataset.i); });
@@ -878,7 +953,7 @@
     e.preventDefault();
     const w = $('#o-w').value.trim(), l = $('#o-l').value.trim();
     const m = medidaElegida(), n = cantidad();
-    let t = `Hola Velvetino! Me interesa el modelo "${current.nombre}".`;
+    let t = `¡Hola Miranda! Quiero pedir el modelo "${current.nombre}" de Velvetino.`;
     if (m) t += `\nMedida: ${m.medida} (${pesos(m.precio)} c/u)`;
     else if (w || l) t += `\nMedida: ${w || '?'} × ${l || '?'} cm (a consultar)`;
     else t += `\nMedida: otra, a consultar`;
@@ -895,6 +970,8 @@
     const p = q && PRODUCTOS.find(x => x.id === (ALIAS[q] || q));
     $('#home').hidden = !!p;
     $('#detail').hidden = !p;
+    $('#buybar').hidden = !p;
+    document.body.classList.toggle('en-modelo', !!p);
     if (p) renderDetail(p);
     else document.title = 'Velvetino · Almohadones a medida hechos a mano en Córdoba';
   }
