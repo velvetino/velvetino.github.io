@@ -177,9 +177,9 @@
 
   /* almohadón teñido: la foto en blanco y negro se multiplica sobre el color */
   .tint { position: relative; width: 72%; aspect-ratio: 790 / 1000; filter: drop-shadow(0 18px 24px rgba(0,0,0,.22)); }
-  .tint i { position: absolute; inset: 0; background: var(--c); -webkit-mask: url(img/almohadon-color.webp) center / contain no-repeat; mask: url(img/almohadon-color.webp) center / contain no-repeat; }
+  .tint i { position: absolute; inset: 0; background: var(--c); -webkit-mask: url(img/almohadon-color.webp?v=2) center / contain no-repeat; mask: url(img/almohadon-color.webp?v=2) center / contain no-repeat; }
   .tint img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
-  .tint b { position: absolute; inset: 0; background: url(img/almohadon-color.webp) center / contain no-repeat; mix-blend-mode: screen; opacity: .12; }
+  .tint b { position: absolute; inset: 0; background: url(img/almohadon-color.webp?v=2) center / contain no-repeat; mix-blend-mode: screen; opacity: .12; }
   .pal-stage .hint { position: absolute; left: 14px; bottom: 14px; background: var(--crema); color: var(--muted); font-weight: 600; font-size: .8rem; padding: 6px 12px; border-radius: 999px; }
   .pal-real { display: inline-flex; align-items: center; gap: 10px; margin-top: 12px; color: var(--ink); font-weight: 600; font-size: .92rem; text-underline-offset: 3px; }
   .pal-real img { width: 52px; height: 52px; object-fit: cover; border-radius: 6px; }
@@ -857,7 +857,7 @@
   const slug = n => n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ /g, '-');
   $('#pal-list').innerHTML = COLORES.map(([n], i) =>
     `<li><button type="button" data-i="${i}" aria-pressed="false"><img src="img/pana/${slug(n)}.jpg" alt="" loading="lazy" decoding="async">${n}</button></li>`).join('');
-  const tinte = (hex) => `<div class="tint" style="--c:${hex}"><i></i><img src="img/almohadon-color.webp" alt=""><b></b></div>`;
+  const tinte = (hex) => `<div class="tint" style="--c:${hex}"><i></i><img src="img/almohadon-color.webp?v=2" alt=""><b></b></div>`;
   // Siempre se muestra un almohadón del color elegido; si hay foto real, un acceso debajo
   function elegirColor(i) {
     const [n, hex] = COLORES[i], foto = FOTO_COLOR[n], stage = $('#pal-stage');
