@@ -200,7 +200,9 @@
   .pal-info small { color: var(--muted); font-size: .9rem; }
   .pal-info .btn { min-height: 42px; padding: 0 18px; font-size: .9rem; }
   .pal-note { color: var(--muted); font-size: .86rem; margin: 18px 0 0; max-width: 60ch; }
-  .fabric-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .fabric-pick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+  @media (max-width: 420px) { .fabric-pick { grid-template-columns: minmax(0, 1fr); } }
+  .fabric-info { color: var(--muted); font-size: .85rem; margin: -6px 0 16px; }
   .fabric-pick label { display: block; cursor: pointer; border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--crema); }
   .fabric-pick input { position: absolute; opacity: 0; pointer-events: none; }
   .fabric-pick strong { display: block; font-size: .95rem; }
@@ -479,7 +481,7 @@
       <div>
         <h2 id="precios-t">Precios por medida</h2>
         <p class="lede">El precio es por almohadón. Para un set, se suma cada pieza: por ejemplo, un asiento de 120 × 60 y un respaldo de 120 × 60 son dos almohadones.</p>
-        <p class="lede">Opción extra: cualquier modelo se puede hacer en tela de exterior, impermeable y con filtro solar, por $17.000 más por almohadón.</p>
+        <p class="lede">Para exterior hay dos telas: Panamá, 100% algodón y suave, por $19.000 más por almohadón; o impermeable de PVC con filtro solar, por $17.000 más por almohadón.</p>
         <p class="lede">¿Necesitás otra medida? Escribime y te paso el precio.</p>
       </div>
       <table class="price-table">
@@ -508,7 +510,7 @@
         <details><summary>¿Cómo hago un pedido?</summary><p>Entrá al modelo que te guste, elegí medida, cantidad y color, y tocá «Pedir por WhatsApp»: el mensaje se arma solo con todo lo que elegiste. Te respondo para confirmar.</p></details>
         <details><summary>¿Qué diferencia hay entre un almohadón regular y uno de placa?</summary><p>El regular va relleno y capitoné: es mullido y se adapta al cuerpo. El de placa lleva goma espuma en una sola pieza: es firme, mantiene los bordes rectos y se corta a la forma exacta que necesites, incluso redondeada o en media luna.</p></details>
         <details><summary>¿Puedo pedir una medida especial?</summary><p>Sí, todo se hace por pedido. Si tu medida no está en la lista de precios, mandame ancho y largo en centímetros y te paso el precio.</p></details>
-        <details><summary>¿Hay telas para exterior?</summary><p>Sí. Para jardín, galería y camastros cualquier modelo se puede hacer en tela de exterior, impermeable y con filtro solar, en 16 colores. Suma $17.000 por almohadón. Para interior, pana antimanchas.</p></details>
+        <details><summary>¿Hay telas para exterior?</summary><p>Sí, hay dos. La Panamá es 100% algodón y más suave, pero no es impermeable; suma $19.000 por almohadón. La otra es de PVC: impermeable y con filtro solar, en 16 colores, y suma $17.000 por almohadón. Para interior, pana antimanchas.</p></details>
         <details><summary>¿Dónde entregás?</summary><p>Por ahora trabajo solo en Córdoba Capital. Coordinamos por WhatsApp la entrega o el retiro.</p></details>
         <details><summary>¿Cómo pago?</summary><p>Cuando te confirmo el pedido, te paso los datos para pagar por transferencia o con Mercado Pago.</p></details>
       </div>
@@ -546,9 +548,11 @@
           </div>
           <span class="field-label" id="o-fabric-label">Tela</span>
           <div class="fabric-pick" role="radiogroup" aria-labelledby="o-fabric-label">
-            <div><input type="radio" name="o-tela" id="o-tela-pana" value="pana" checked><label for="o-tela-pana"><strong>Pana antimanchas</strong><small>Interior · 26 colores</small></label></div>
-            <div><input type="radio" name="o-tela" id="o-tela-exterior" value="exterior"><label for="o-tela-exterior"><strong>Exterior impermeable</strong><small>Con filtro solar · +$17.000 c/u</small></label></div>
+            <div><input type="radio" name="o-tela" id="o-tela-pana" value="pana" checked><label for="o-tela-pana"><strong>Pana antimanchas</strong><small>Interior</small></label></div>
+            <div><input type="radio" name="o-tela" id="o-tela-panama" value="panama"><label for="o-tela-panama"><strong>Panamá</strong><small>Exterior · +$19.000 c/u</small></label></div>
+            <div><input type="radio" name="o-tela" id="o-tela-exterior" value="exterior"><label for="o-tela-exterior"><strong>Impermeable</strong><small>Exterior · +$17.000 c/u</small></label></div>
           </div>
+          <p class="fabric-info" id="o-fabric-info"></p>
           <div id="o-colors-wrap">
             <span class="field-label" id="o-colors-label">Color</span>
             <div class="mini-bolt" id="o-colors" role="group" aria-labelledby="o-colors-label"></div>
@@ -627,8 +631,12 @@
   ];
   const TELAS = {
     pana: { nombre: 'Pana antimanchas', extra: 0, colores: null, carpeta: 'img/pana',
+      info: 'Pana antimanchas, suave al tacto. Para interior. 26 colores.',
       nota: '' },
-    exterior: { nombre: 'Exterior impermeable', extra: 17000, colores: EXTERIOR, carpeta: 'img/exterior',
+    panama: { nombre: 'Panamá (100% algodón)', extra: 19000, colores: [], carpeta: '', nota: '',
+      info: 'Para exterior. 100% algodón, la más suave de las de exterior. No es impermeable. Suma $19.000 por almohadón. Colores a consultar.' },
+    exterior: { nombre: 'Exterior impermeable de PVC, con filtro solar', extra: 17000, colores: EXTERIOR, carpeta: 'img/exterior',
+      info: 'Para exterior. De PVC: impermeable y con filtro solar, el color resiste el sol. Suma $17.000 por almohadón. 16 colores.',
       nota: '' }
   };
 
@@ -698,10 +706,10 @@
       carpeta: "almohadones-con-cierre", fotos: ["n43.jpg","n44.jpg","n45.jpg","foto-1.jpg","foto-2.jpg"]
     },
     {
-      id: "set-almohadones-camastro-estilo-futon", medidas: "largos", exterior: true, nombre: "Set para camastro y jardín", formato: "regular", cat: ["exterior", "futon"],
-      resumen: "Tela de exterior impermeable · a medida",
-      descripcion: "Almohadones capitoné pensados para estar afuera, en tela de exterior impermeable y con filtro solar. En las fotos, en tela Panamá. Mandame las medidas de tu camastro o reposera y te paso el precio.",
-      tela: "Exterior impermeable", pana: false, medida: "A medida", uso: "Camastro, jardín, galería",
+      id: "set-almohadones-camastro-estilo-futon", medidas: "largos", telaInicial: "panama", nombre: "Set para camastro y jardín", formato: "regular", cat: ["exterior", "futon"],
+      resumen: "Tela Panamá o impermeable · a medida",
+      descripcion: "Almohadones capitoné pensados para estar afuera. En las fotos, en tela Panamá, 100% algodón y muy suave. También se hacen en tela impermeable de PVC con filtro solar. Mandame las medidas de tu camastro o reposera y te paso el precio.",
+      tela: "Panamá o impermeable", pana: false, medida: "A medida", uso: "Camastro, jardín, galería",
       carpeta: "set-almohadones-camastro-estilo-futon",
       fotos: ["foto (1).jpg","crudo-reposera.jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg","foto (5).jpg","foto (6).jpg",
               "../set-almohadones-jardín-camastro-estilo-futon/foto (3).jpg","../set-almohadones-jardín-camastro-estilo-futon/foto (7).jpg"]
@@ -754,7 +762,7 @@
   document.querySelectorAll('[data-tel]').forEach(a => { a.href = 'tel:+' + WA_NUMBER; a.textContent = TELEFONO; });
 
   const medidasDe = p => MEDIDAS[p.medidas || 'todas'].map(id => PRECIOS.find(x => x.id === id));
-  const desde = p => Math.min(...medidasDe(p).map(x => x.precio)) + (p.exterior ? 17000 : 0);
+  const desde = p => Math.min(...medidasDe(p).map(x => x.precio)) + ((TELAS[p.telaInicial] || {}).extra || 0);
 
   /* ---------- lista de precios ---------- */
   $('#price-rows').innerHTML = PRECIOS.map(x =>
@@ -898,7 +906,10 @@
   const telaPedido = () => document.querySelector('input[name="o-tela"]:checked').value;
   function pintarColores() {
     colorPedido = null;
-    oColors.innerHTML = TELAS[telaPedido()].colores.map(swatchHTML).join('');
+    const tela = TELAS[telaPedido()];
+    oColors.innerHTML = tela.colores.map(swatchHTML).join('');
+    $('#o-colors-wrap').hidden = tela.colores.length === 0;
+    $('#o-fabric-info').textContent = tela.info;
     $('#o-picked').textContent = 'Sin elegir';
   }
   document.querySelectorAll('input[name="o-tela"]').forEach(r => r.addEventListener('change', () => { pintarColores(); updateTotal(); }));
@@ -932,7 +943,7 @@
       <dt>Confección</dt><dd>A mano, por pedido</dd>`;
     $('#thumbs').innerHTML = p.fotos.map((f, i) =>
       `<button type="button" data-i="${i}" aria-label="Ver foto ${i + 1}"><img src="${src(p, f)}" alt="" loading="lazy"></button>`).join('');
-    document.getElementById(p.exterior ? 'o-tela-exterior' : 'o-tela-pana').checked = true;
+    document.getElementById('o-tela-' + (p.telaInicial || 'pana')).checked = true;
     pintarColores();
     $('#o-w').value = ''; $('#o-l').value = '';
     $('#d-price').innerHTML = `Desde ${pesos(desde(p))} <small>por almohadón</small>`;
