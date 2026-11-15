@@ -200,8 +200,8 @@
   .pal-info small { color: var(--muted); font-size: .9rem; }
   .pal-info .btn { min-height: 42px; padding: 0 18px; font-size: .9rem; }
   .pal-note { color: var(--muted); font-size: .86rem; margin: 18px 0 0; max-width: 60ch; }
-  .fabric-pick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
-  @media (max-width: 420px) { .fabric-pick { grid-template-columns: minmax(0, 1fr); } }
+  .fabric-pick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+  @media (max-width: 360px) { .fabric-pick { grid-template-columns: minmax(0, 1fr); } }
   .fabric-info { color: var(--muted); font-size: .85rem; margin: -6px 0 16px; }
   .fabric-pick label { display: block; cursor: pointer; border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--crema); }
   .fabric-pick input { position: absolute; opacity: 0; pointer-events: none; }
@@ -510,6 +510,7 @@
         <details><summary>¿Cómo hago un pedido?</summary><p>Entrá al modelo que te guste, elegí medida, cantidad y color, y tocá «Pedir por WhatsApp»: el mensaje se arma solo con todo lo que elegiste. Te respondo para confirmar.</p></details>
         <details><summary>¿Qué diferencia hay entre un almohadón regular y uno de placa?</summary><p>El regular va relleno y capitoné: es mullido y se adapta al cuerpo. El de placa lleva goma espuma en una sola pieza: es firme, mantiene los bordes rectos y se corta a la forma exacta que necesites, incluso redondeada o en media luna.</p></details>
         <details><summary>¿Puedo pedir una medida especial?</summary><p>Sí, todo se hace por pedido. Si tu medida no está en la lista de precios, mandame ancho y largo en centímetros y te paso el precio.</p></details>
+        <details><summary>¿Tenés tela para casas con mascotas?</summary><p>Sí, la antidesgarro: resiste las uñas de perros y gatos. Es para interior y viene en 20 colores. Se elige al pedir cualquier modelo.</p></details>
         <details><summary>¿Hay telas para exterior?</summary><p>Sí, hay dos. La Panamá es 100% algodón y más suave, pero no es impermeable; suma $19.000 por almohadón. La otra es de PVC: impermeable y con filtro solar, en 16 colores, y suma $17.000 por almohadón. Para interior, pana antimanchas.</p></details>
         <details><summary>¿Dónde entregás?</summary><p>Por ahora trabajo solo en Córdoba Capital. Coordinamos por WhatsApp la entrega o el retiro.</p></details>
         <details><summary>¿Cómo pago?</summary><p>Cuando te confirmo el pedido, te paso los datos para pagar por transferencia o con Mercado Pago.</p></details>
@@ -549,6 +550,7 @@
           <span class="field-label" id="o-fabric-label">Tela</span>
           <div class="fabric-pick" role="radiogroup" aria-labelledby="o-fabric-label">
             <div><input type="radio" name="o-tela" id="o-tela-pana" value="pana" checked><label for="o-tela-pana"><strong>Pana antimanchas</strong><small>Interior</small></label></div>
+            <div><input type="radio" name="o-tela" id="o-tela-antidesgarro" value="antidesgarro"><label for="o-tela-antidesgarro"><strong>Antidesgarro</strong><small>Ideal con mascotas</small></label></div>
             <div><input type="radio" name="o-tela" id="o-tela-panama" value="panama"><label for="o-tela-panama"><strong>Panamá</strong><small>Exterior · +$19.000 c/u</small></label></div>
             <div><input type="radio" name="o-tela" id="o-tela-exterior" value="exterior"><label for="o-tela-exterior"><strong>Impermeable</strong><small>Exterior · +$17.000 c/u</small></label></div>
           </div>
@@ -633,6 +635,11 @@
     pana: { nombre: 'Pana antimanchas', extra: 0, colores: null, carpeta: 'img/pana',
       info: 'Pana antimanchas, suave al tacto. Para interior. 26 colores.',
       nota: '' },
+    antidesgarro: { nombre: 'Antidesgarro', extra: 0, carpeta: 'img/antidesgarro', nota: '',
+      colores: [["Crudo","#e6decc"],["Marfil","#e5dac5"],["Arena","#dfcfb7"],["Beige","#ccbb9b"],["Tostado","#d6bf95"],["Camel","#daad71"],["Amarillo","#f7d018"],
+        ["Pistacho","#d4c277"],["Lima","#baa73a"],["Coral","#ec906e"],["Terracota","#d6967a"],["Visón","#b4a386"],["Natural","#e6e2cf"],["Salvia","#b3bbb2"],
+        ["Celeste","#b7cddb"],["Azul","#658dae"],["Piedra","#b6aa9e"],["Gris","#858585"],["Grafito","#7a776c"],["Negro","#404444"]],
+      info: 'Tela antidesgarro: resiste las uñas de perros y gatos, ideal si tenés mascotas. Para interior. 20 colores.' },
     panama: { nombre: 'Panamá (100% algodón)', extra: 19000, colores: [], carpeta: '', nota: '',
       info: 'Para exterior. 100% algodón, la más suave de las de exterior. No es impermeable. Suma $19.000 por almohadón. Colores a consultar.' },
     exterior: { nombre: 'Exterior impermeable de PVC, con filtro solar', extra: 17000, colores: EXTERIOR, carpeta: 'img/exterior',
@@ -715,7 +722,7 @@
               "../set-almohadones-jardín-camastro-estilo-futon/foto (3).jpg","../set-almohadones-jardín-camastro-estilo-futon/foto (7).jpg"]
     },
     {
-      id: "almohadon-sillon", medidas: "largos", nombre: "Almohadón-sillón", formato: "regular", cat: ["exterior", "living"],
+      id: "almohadon-sillon", medidas: "largos", telaInicial: "antidesgarro", nombre: "Almohadón-sillón", formato: "regular", cat: ["exterior", "living"],
       resumen: "Tela antidesgarro · 120 × 70 cm",
       descripcion: "Va en el camastro, en el piso o en el jardín. En las fotos, en tela antidesgarro gris petróleo y azul marino.",
       tela: "Antidesgarro", pana: false, medida: "120 × 70 cm", uso: "Camastro, piso, jardín",
