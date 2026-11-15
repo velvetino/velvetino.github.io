@@ -481,6 +481,7 @@
       <div>
         <h2 id="precios-t">Precios por medida</h2>
         <p class="lede">El precio es por almohadón. Para un set, se suma cada pieza: por ejemplo, un asiento de 120 × 60 y un respaldo de 120 × 60 son dos almohadones.</p>
+        <p class="lede">Tela antidesgarro, ideal con mascotas: $15.000 más por almohadón.</p>
         <p class="lede">Para exterior hay dos telas: Panamá, 100% algodón y suave, por $19.000 más por almohadón; o impermeable de PVC con filtro solar, por $17.000 más por almohadón.</p>
         <p class="lede">¿Necesitás otra medida? Escribime y te paso el precio.</p>
       </div>
@@ -510,7 +511,7 @@
         <details><summary>¿Cómo hago un pedido?</summary><p>Entrá al modelo que te guste, elegí medida, cantidad y color, y tocá «Pedir por WhatsApp»: el mensaje se arma solo con todo lo que elegiste. Te respondo para confirmar.</p></details>
         <details><summary>¿Qué diferencia hay entre un almohadón regular y uno de placa?</summary><p>El regular va relleno y capitoné: es mullido y se adapta al cuerpo. El de placa lleva goma espuma en una sola pieza: es firme, mantiene los bordes rectos y se corta a la forma exacta que necesites, incluso redondeada o en media luna.</p></details>
         <details><summary>¿Puedo pedir una medida especial?</summary><p>Sí, todo se hace por pedido. Si tu medida no está en la lista de precios, mandame ancho y largo en centímetros y te paso el precio.</p></details>
-        <details><summary>¿Tenés tela para casas con mascotas?</summary><p>Sí, la antidesgarro: resiste las uñas de perros y gatos. Es para interior y viene en 20 colores. Se elige al pedir cualquier modelo.</p></details>
+        <details><summary>¿Tenés tela para casas con mascotas?</summary><p>Sí, la antidesgarro: resiste las uñas de perros y gatos. Es para interior, viene en 20 colores y suma $15.000 por almohadón. Se elige al pedir cualquier modelo.</p></details>
         <details><summary>¿Hay telas para exterior?</summary><p>Sí, hay dos. La Panamá es 100% algodón y más suave, pero no es impermeable; suma $19.000 por almohadón. La otra es de PVC: impermeable y con filtro solar, en 16 colores, y suma $17.000 por almohadón. Para interior, pana antimanchas.</p></details>
         <details><summary>¿Dónde entregás?</summary><p>Por ahora trabajo solo en Córdoba Capital. Coordinamos por WhatsApp la entrega o el retiro.</p></details>
         <details><summary>¿Cómo pago?</summary><p>Cuando te confirmo el pedido, te paso los datos para pagar por transferencia o con Mercado Pago.</p></details>
@@ -550,7 +551,7 @@
           <span class="field-label" id="o-fabric-label">Tela</span>
           <div class="fabric-pick" role="radiogroup" aria-labelledby="o-fabric-label">
             <div><input type="radio" name="o-tela" id="o-tela-pana" value="pana" checked><label for="o-tela-pana"><strong>Pana antimanchas</strong><small>Interior</small></label></div>
-            <div><input type="radio" name="o-tela" id="o-tela-antidesgarro" value="antidesgarro"><label for="o-tela-antidesgarro"><strong>Antidesgarro</strong><small>Ideal con mascotas</small></label></div>
+            <div><input type="radio" name="o-tela" id="o-tela-antidesgarro" value="antidesgarro"><label for="o-tela-antidesgarro"><strong>Antidesgarro</strong><small>Mascotas · +$15.000 c/u</small></label></div>
             <div><input type="radio" name="o-tela" id="o-tela-panama" value="panama"><label for="o-tela-panama"><strong>Panamá</strong><small>Exterior · +$19.000 c/u</small></label></div>
             <div><input type="radio" name="o-tela" id="o-tela-exterior" value="exterior"><label for="o-tela-exterior"><strong>Impermeable</strong><small>Exterior · +$17.000 c/u</small></label></div>
           </div>
@@ -635,11 +636,11 @@
     pana: { nombre: 'Pana antimanchas', extra: 0, colores: null, carpeta: 'img/pana',
       info: 'Pana antimanchas, suave al tacto. Para interior. 26 colores.',
       nota: '' },
-    antidesgarro: { nombre: 'Antidesgarro', extra: 0, carpeta: 'img/antidesgarro', nota: '',
+    antidesgarro: { nombre: 'Antidesgarro', extra: 15000, carpeta: 'img/antidesgarro', nota: '',
       colores: [["Óptico","#e6decc"],["Crudo","#e5dac5"],["Beige","#dfcfb7"],["Lino","#ccbb9b"],["Arena","#d6bf95"],["Almendra","#daad71"],["Amarillo","#f7d018"],
         ["Verde","#d4c277"],["Musgo","#baa73a"],["Rosa","#ec906e"],["Nude","#d6967a"],["Gamo","#b4a386"],["Stone","#e6e2cf"],["Piedra","#b3bbb2"],
         ["Cielo","#b7cddb"],["Azul","#658dae"],["Gris","#b6aa9e"],["Petróleo","#858585"],["Topo","#7a776c"],["Negro","#404444"]],
-      info: 'Tela antidesgarro y antimanchas: resiste las uñas de perros y gatos, ideal si tenés mascotas. Para interior. 20 colores.' },
+      info: 'Tela antidesgarro y antimanchas: resiste las uñas de perros y gatos, ideal si tenés mascotas. Para interior. Suma $15.000 por almohadón. 20 colores.' },
     panama: { nombre: 'Panamá (100% algodón)', extra: 19000, colores: [], carpeta: '', nota: '',
       info: 'Para exterior. 100% algodón, la más suave de las de exterior. No es impermeable. Suma $19.000 por almohadón. Colores a consultar.' },
     exterior: { nombre: 'Exterior impermeable de PVC, con filtro solar', extra: 17000, colores: EXTERIOR, carpeta: 'img/exterior',
@@ -969,7 +970,7 @@
     $('#o-total-label').textContent = m ? (cantidad() > 1 ? `Total por ${cantidad()} almohadones` : 'Total') : 'Total';
     const extra = TELAS[telaPedido()].extra;
     $('#o-total').textContent = m ? pesos((m.precio + extra) * cantidad()) : 'A consultar';
-    $('#o-total-note').textContent = extra ? `Incluye tela de exterior (+${pesos(extra)} c/u)` : '';
+    $('#o-total-note').textContent = extra ? `Incluye recargo por tela (+${pesos(extra)} c/u)` : '';
     $('#bb-label').textContent = $('#o-total-label').textContent;
     $('#bb-total').textContent = $('#o-total').textContent;
   }
