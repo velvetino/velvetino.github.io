@@ -200,6 +200,14 @@
   .pal-info small { color: var(--muted); font-size: .9rem; }
   .pal-info .btn { min-height: 42px; padding: 0 18px; font-size: .9rem; }
   .pal-note { color: var(--muted); font-size: .86rem; margin: 18px 0 0; max-width: 60ch; }
+  .fabric-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .fabric-pick label { display: block; cursor: pointer; border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--crema); }
+  .fabric-pick input { position: absolute; opacity: 0; pointer-events: none; }
+  .fabric-pick strong { display: block; font-size: .95rem; }
+  .fabric-pick small { color: var(--muted); font-size: .82rem; }
+  .fabric-pick input:checked + label { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .fabric-pick input:focus-visible + label { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .total-note { display: block; color: var(--muted); font-size: .8rem; font-weight: 500; margin-top: 2px; }
   @media (max-width: 860px) {
     .pal { grid-template-columns: minmax(0, 1fr); }
     .pal-view { position: static; order: -1; }
@@ -471,6 +479,7 @@
       <div>
         <h2 id="precios-t">Precios por medida</h2>
         <p class="lede">El precio es por almohadón. Para un set, se suma cada pieza: por ejemplo, un asiento de 120 × 60 y un respaldo de 120 × 60 son dos almohadones.</p>
+        <p class="lede">Opción extra: cualquier modelo se puede hacer en tela de exterior, impermeable y con filtro solar, por $17.000 más por almohadón.</p>
         <p class="lede">¿Necesitás otra medida? Escribime y te paso el precio.</p>
       </div>
       <table class="price-table">
@@ -499,7 +508,7 @@
         <details><summary>¿Cómo hago un pedido?</summary><p>Entrá al modelo que te guste, elegí medida, cantidad y color, y tocá «Pedir por WhatsApp»: el mensaje se arma solo con todo lo que elegiste. Te respondo para confirmar.</p></details>
         <details><summary>¿Qué diferencia hay entre un almohadón regular y uno de placa?</summary><p>El regular va relleno y capitoné: es mullido y se adapta al cuerpo. El de placa lleva goma espuma en una sola pieza: es firme, mantiene los bordes rectos y se corta a la forma exacta que necesites, incluso redondeada o en media luna.</p></details>
         <details><summary>¿Puedo pedir una medida especial?</summary><p>Sí, todo se hace por pedido. Si tu medida no está en la lista de precios, mandame ancho y largo en centímetros y te paso el precio.</p></details>
-        <details><summary>¿Hay telas para exterior?</summary><p>Sí. Para jardín y camastros uso tela Panamá, apta exterior. Para interior, pana antimanchas o tela antidesgarro.</p></details>
+        <details><summary>¿Hay telas para exterior?</summary><p>Sí. Para jardín, galería y camastros cualquier modelo se puede hacer en tela de exterior, impermeable y con filtro solar, en 16 colores. Suma $17.000 por almohadón. Para interior, pana antimanchas.</p></details>
         <details><summary>¿Dónde entregás?</summary><p>Por ahora trabajo solo en Córdoba Capital. Coordinamos por WhatsApp la entrega o el retiro.</p></details>
         <details><summary>¿Cómo pago?</summary><p>Cuando te confirmo el pedido, te paso los datos para pagar por transferencia o con Mercado Pago.</p></details>
       </div>
@@ -535,12 +544,17 @@
             <div class="field"><label for="o-w">Ancho (cm)</label><input id="o-w" inputmode="numeric" pattern="[0-9]*" placeholder="65"></div>
             <div class="field"><label for="o-l">Largo (cm)</label><input id="o-l" inputmode="numeric" pattern="[0-9]*" placeholder="140"></div>
           </div>
+          <span class="field-label" id="o-fabric-label">Tela</span>
+          <div class="fabric-pick" role="radiogroup" aria-labelledby="o-fabric-label">
+            <div><input type="radio" name="o-tela" id="o-tela-pana" value="pana" checked><label for="o-tela-pana"><strong>Pana antimanchas</strong><small>Interior · 26 colores</small></label></div>
+            <div><input type="radio" name="o-tela" id="o-tela-exterior" value="exterior"><label for="o-tela-exterior"><strong>Exterior impermeable</strong><small>Con filtro solar · +$17.000 c/u</small></label></div>
+          </div>
           <div id="o-colors-wrap">
-            <span class="field-label" id="o-colors-label">Color de pana</span>
+            <span class="field-label" id="o-colors-label">Color</span>
             <div class="mini-bolt" id="o-colors" role="group" aria-labelledby="o-colors-label"></div>
             <p class="picked" id="o-picked" aria-live="polite">Sin elegir</p>
           </div>
-          <p class="total" aria-live="polite"><span id="o-total-label">Total</span><strong id="o-total"></strong></p>
+          <p class="total" aria-live="polite"><span><span id="o-total-label">Total</span><span class="total-note" id="o-total-note"></span></span><strong id="o-total"></strong></p>
           <button class="btn btn-red" type="submit">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#wa-icon"/></svg>
             Pedir por WhatsApp
@@ -604,6 +618,19 @@
   const CATEGORIAS = [
     ["todos", "Todos"], ["living", "Living y piso"], ["futon", "Estilo futón"], ["fundas", "Fundas y respaldos"], ["exterior", "Exterior"], ["sillas", "Sillas"]
   ];
+
+  // Tela de exterior impermeable: colores y recargo por almohadón
+  const EXTERIOR = [
+    ["Grafito","#46433c"],["Humo","#756e63"],["Gris","#aea28e"],["Blanco","#d5c7b0"],["Beige","#b5a489"],["Café","#573b26"],
+    ["Chocolate","#453328"],["Denim","#565c5b"],["Azul océano","#3b5672"],["Aqua","#3b7c8b"],["Mostaza","#d3a85c"],["Rojo","#c5483b"],
+    ["Naranja","#c26a3d"],["Rosa","#daac9b"],["Verde","#a4a34f"],["Negro","#35332c"]
+  ];
+  const TELAS = {
+    pana: { nombre: 'Pana antimanchas', extra: 0, colores: null, carpeta: 'img/pana',
+      nota: '' },
+    exterior: { nombre: 'Exterior impermeable', extra: 17000, colores: EXTERIOR, carpeta: 'img/exterior',
+      nota: '' }
+  };
 
   // Precios por almohadón individual, en pesos
   const PRECIOS = [
@@ -671,10 +698,10 @@
       carpeta: "almohadones-con-cierre", fotos: ["n43.jpg","n44.jpg","n45.jpg","foto-1.jpg","foto-2.jpg"]
     },
     {
-      id: "set-almohadones-camastro-estilo-futon", medidas: "largos", nombre: "Set para camastro y jardín", formato: "regular", cat: ["exterior", "futon"],
-      resumen: "Tela Panamá apta exterior · a medida",
-      descripcion: "Almohadones capitoné en tela Panamá, pensados para estar afuera. Mandame las medidas de tu camastro o reposera y te paso el precio.",
-      tela: "Panamá (apta exterior)", pana: false, medida: "A medida", uso: "Camastro, jardín, galería",
+      id: "set-almohadones-camastro-estilo-futon", medidas: "largos", exterior: true, nombre: "Set para camastro y jardín", formato: "regular", cat: ["exterior", "futon"],
+      resumen: "Tela de exterior impermeable · a medida",
+      descripcion: "Almohadones capitoné pensados para estar afuera, en tela de exterior impermeable y con filtro solar. En las fotos, en tela Panamá. Mandame las medidas de tu camastro o reposera y te paso el precio.",
+      tela: "Exterior impermeable", pana: false, medida: "A medida", uso: "Camastro, jardín, galería",
       carpeta: "set-almohadones-camastro-estilo-futon",
       fotos: ["foto (1).jpg","crudo-reposera.jpg","foto (2).jpg","foto (3).jpg","foto (4).jpg","foto (5).jpg","foto (6).jpg",
               "../set-almohadones-jardín-camastro-estilo-futon/foto (3).jpg","../set-almohadones-jardín-camastro-estilo-futon/foto (7).jpg"]
@@ -727,7 +754,7 @@
   document.querySelectorAll('[data-tel]').forEach(a => { a.href = 'tel:+' + WA_NUMBER; a.textContent = TELEFONO; });
 
   const medidasDe = p => MEDIDAS[p.medidas || 'todas'].map(id => PRECIOS.find(x => x.id === id));
-  const desde = p => Math.min(...medidasDe(p).map(x => x.precio));
+  const desde = p => Math.min(...medidasDe(p).map(x => x.precio)) + (p.exterior ? 17000 : 0);
 
   /* ---------- lista de precios ---------- */
   $('#price-rows').innerHTML = PRECIOS.map(x =>
@@ -818,7 +845,8 @@
     "Agua": ["almohadones-sillas-butacas", "celeste-apilados.jpg"],
     "Chocolate": ["set-almohadones-sillones-futon", "chocolate-set.jpg"]
   };
-  const slug = n => n.toLowerCase().replace(/ /g, '-');
+  TELAS.pana.colores = COLORES;
+  const slug = n => n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ /g, '-');
   $('#pal-list').innerHTML = COLORES.map(([n], i) =>
     `<li><button type="button" data-i="${i}" aria-pressed="false"><img src="img/pana/${slug(n)}.jpg" alt="" loading="lazy" decoding="async">${n}</button></li>`).join('');
   const tinte = (hex) => `<div class="tint" style="--c:${hex}"><i></i><img src="img/almohadon-color.webp" alt=""><b></b></div>`;
@@ -867,13 +895,20 @@
   /* ---------- detalle ---------- */
   let current = null, colorPedido = null;
   const oColors = $('#o-colors');
-  oColors.innerHTML = COLORES.map(swatchHTML).join('');
+  const telaPedido = () => document.querySelector('input[name="o-tela"]:checked').value;
+  function pintarColores() {
+    colorPedido = null;
+    oColors.innerHTML = TELAS[telaPedido()].colores.map(swatchHTML).join('');
+    $('#o-picked').textContent = 'Sin elegir';
+  }
+  document.querySelectorAll('input[name="o-tela"]').forEach(r => r.addEventListener('change', () => { pintarColores(); updateTotal(); }));
+  pintarColores();
   oColors.addEventListener('click', e => {
     const b = e.target.closest('.swatch'); if (!b) return;
     const i = +b.dataset.i;
     colorPedido = colorPedido === i ? null : i;
     oColors.querySelectorAll('.swatch').forEach(x => x.setAttribute('aria-pressed', colorPedido !== null && x.dataset.i == colorPedido));
-    $('#o-picked').textContent = colorPedido === null ? 'Sin elegir' : COLORES[i][0];
+    $('#o-picked').textContent = colorPedido === null ? 'Sin elegir' : TELAS[telaPedido()].colores[i][0];
   });
 
   function showPhoto(i) {
@@ -897,9 +932,8 @@
       <dt>Confección</dt><dd>A mano, por pedido</dd>`;
     $('#thumbs').innerHTML = p.fotos.map((f, i) =>
       `<button type="button" data-i="${i}" aria-label="Ver foto ${i + 1}"><img src="${src(p, f)}" alt="" loading="lazy"></button>`).join('');
-    $('#o-colors-wrap').hidden = !p.pana;
-    oColors.querySelectorAll('.swatch').forEach(x => x.setAttribute('aria-pressed', 'false'));
-    $('#o-picked').textContent = 'Sin elegir';
+    document.getElementById(p.exterior ? 'o-tela-exterior' : 'o-tela-pana').checked = true;
+    pintarColores();
     $('#o-w').value = ''; $('#o-l').value = '';
     $('#d-price').innerHTML = `Desde ${pesos(desde(p))} <small>por almohadón</small>`;
     $('#o-size').innerHTML = medidasDe(p).map(x =>
@@ -915,7 +949,9 @@
     const m = medidaElegida();
     $('#o-custom').hidden = !!m;
     $('#o-total-label').textContent = m ? (cantidad() > 1 ? `Total por ${cantidad()} almohadones` : 'Total') : 'Total';
-    $('#o-total').textContent = m ? pesos(m.precio * cantidad()) : 'A consultar';
+    const extra = TELAS[telaPedido()].extra;
+    $('#o-total').textContent = m ? pesos((m.precio + extra) * cantidad()) : 'A consultar';
+    $('#o-total-note').textContent = extra ? `Incluye tela de exterior (+${pesos(extra)} c/u)` : '';
     $('#bb-label').textContent = $('#o-total-label').textContent;
     $('#bb-total').textContent = $('#o-total').textContent;
   }
@@ -929,12 +965,14 @@
     const w = $('#o-w').value.trim(), l = $('#o-l').value.trim();
     const m = medidaElegida(), n = cantidad();
     let t = `¡Hola Velvetino! Quiero pedir el modelo "${current.nombre}".`;
-    if (m) t += `\nMedida: ${m.medida} (${pesos(m.precio)} c/u)`;
+    const tela = TELAS[telaPedido()];
+    if (m) t += `\nMedida: ${m.medida} (${pesos(m.precio + tela.extra)} c/u)`;
     else if (w || l) t += `\nMedida: ${w || '?'} × ${l || '?'} cm (a consultar)`;
     else t += `\nMedida: otra, a consultar`;
     t += `\nCantidad: ${n}`;
-    if (m) t += `\nTotal: ${pesos(m.precio * n)}`;
-    if (current.pana && colorPedido !== null) t += `\nColor: pana ${COLORES[colorPedido][0]}`;
+    t += `\nTela: ${tela.nombre}${tela.extra ? ` (+${pesos(tela.extra)} c/u)` : ''}`;
+    if (colorPedido !== null) t += `\nColor: ${tela.colores[colorPedido][0]}`;
+    if (m) t += `\nTotal: ${pesos((m.precio + tela.extra) * n)}`;
     t += `\n${location.origin}${location.pathname}?p=${current.id}`;
     window.open(waLink(t), '_blank', 'noopener');
   });
