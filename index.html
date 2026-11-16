@@ -635,7 +635,7 @@
     pana: { nombre: 'Pana antimanchas', extra: 0, colores: null, carpeta: 'img/pana',
       info: 'Pana antimanchas, suave al tacto. Para interior. 26 colores.',
       nota: '' },
-    antidesgarro: { nombre: 'Antidesgarro', extra: 15000, carpeta: 'img/antidesgarro', nota: '',
+    antidesgarro: { nombre: 'Antidesgarro', extra: 12000, carpeta: 'img/antidesgarro', nota: '',
       colores: [["Óptico","#e6decc"],["Crudo","#e5dac5"],["Beige","#dfcfb7"],["Lino","#ccbb9b"],["Arena","#d6bf95"],["Almendra","#daad71"],["Amarillo","#f7d018"],
         ["Verde","#d4c277"],["Musgo","#baa73a"],["Rosa","#ec906e"],["Nude","#d6967a"],["Gamo","#b4a386"],["Stone","#e6e2cf"],["Piedra","#b3bbb2"],
         ["Cielo","#b7cddb"],["Azul","#658dae"],["Gris","#b6aa9e"],["Petróleo","#858585"],["Topo","#7a776c"],["Negro","#404444"]],
@@ -649,11 +649,11 @@
 
   // Precios por almohadón individual, en pesos
   const PRECIOS = [
-    { id: "40x40c", medida: "40 × 40 cm", nota: "Sillas de cocina", precio: 14000 },
-    { id: "40x40", medida: "40 × 40 cm", precio: 29000 },
+    { id: "40x40c", medida: "40 × 40 cm", nota: "Silla de cocina", precio: 14000 },
+    { id: "40x40", medida: "40 × 40 cm", nota: "Capitoné", precio: 29000 },
     { id: "50x50", medida: "50 × 50 cm", precio: 36000 },
     { id: "60x50", medida: "60 × 50 cm", precio: 43000 },
-    { id: "60x70", medida: "60 × 70 cm", precio: 48000 },
+    { id: "60x60", medida: "60 × 60 cm", precio: 48000 },
     { id: "70x60", medida: "70 × 60 cm", precio: 53000 },
     { id: "100x60", medida: "100 × 60 cm", precio: 60000 },
     { id: "120x60", medida: "120 × 60 cm", precio: 70000 },
@@ -665,7 +665,7 @@
   ];
   // Qué medidas se ofrecen en cada tipo de modelo
   const MEDIDAS = {
-    sillas: ["40x40c", "40x40", "50x50", "60x50", "60x70", "70x60"],
+    sillas: ["40x40c", "40x40", "50x50", "60x50", "60x60", "70x60"],
     largos: ["100x60", "120x60", "150x60", "160x60", "180x60", "190x60", "200x60"],
     generales: PRECIOS.filter(x => x.id !== '40x40c').map(x => x.id),
     todas: PRECIOS.map(x => x.id)
